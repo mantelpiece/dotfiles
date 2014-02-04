@@ -1,0 +1,57 @@
+#!/bin/sh
+#
+# fluxbox startup-script:
+#
+# Lines starting with a '#' are ignored.
+
+# Change your keymap:
+xmodmap "/home/brendan/.Xmodmap"
+
+# Applications you want to run with fluxbox.
+# MAKE SURE THAT APPS THAT KEEP RUNNING HAVE AN ''&'' AT THE END.
+#
+# unclutter -idle 2 &
+# wmnd &
+# wmsmixer -w &
+# idesk &
+
+gnome-settings-daemon &
+
+# Background!
+fbsetbg ~/Pictures/eclipse-from-leo.jpg &
+
+# Network manager app
+#nm-applet &
+
+# Power management app
+xfce4-power-manager &
+
+# Conky system monitor
+conky -d -q &
+
+# Thing for volume
+volumeicon &
+
+# Desktop terminal
+aterm-xterm +ls -ut -tr +sb -fg grey -bg white &
+
+# And last but not least we start fluxbox.
+# Because it is the last app you have to run it with ''exec'' before it.
+
+exec fluxbox
+# or if you want to keep a log:
+# exec fluxbox -log "/home/brendan/.fluxbox/log"
+
+fbpid=$!
+
+sleep 1
+{
+   # Applications you want to run after fluxbox has started
+   # MAKE SURE THAT APPS THAT KEEP RUNNING HAVE AN & AT THE END.
+   # ipager &
+   # gkrellm2 &
+   xfce4-power-manager &
+} &
+ 
+wait $fbpid
+

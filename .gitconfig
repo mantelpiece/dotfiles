@@ -1,0 +1,23 @@
+[core]
+	excludefile = /home/brendan/.gitignore_global
+[user]
+	name = Brendan Studds
+	email = brendan.studds@gmail.com
+
+[color]
+	ui = true
+[color "status"]
+   branch = red
+   added = green
+   changed = blue
+   untracked = magenta
+
+[alias]
+	lgg = !git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s <%ai> %C(bold blue)<%an>%Creset' --abbrev-commit --date=iso
+	lggy = !git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s <%ai> %C(bold blue)<%an>%Creset' --abbrev-commit --date=iso
+[push]
+	default = upstream
+[url "https://"]
+	insteadOf = git://
+[credential]
+	helper = /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring

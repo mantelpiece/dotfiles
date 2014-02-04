@@ -1,0 +1,160 @@
+[begin] (Fluxbox)
+   [exec] (Chrome) {/opt/google/chrome/google-chrome} </opt/google/chrome/product_logo_32.xpm>
+   [exec] (Firefox) {firefox}
+   [exec] (Nautilus) {nautilus --no-desktop --browser}
+   [exec] (Pidgin) {pidgin}
+   [exec] (Rhythmbox) {/usr/bin/rhythmbox}
+   [exec] (Thunar) {thunar}
+   [exec] (Totem) {totem}
+   [exec] (VLC) {/usr/bin/vlc}
+   [separator]
+   [submenu] (Apps) {}
+      [submenu] (Data Management) {}
+         [exec] (pgAdmin III) {/usr/bin/pgadmin3} </usr/share/pixmaps/pgadmin3.xpm>
+      [end]
+      [submenu] (Editors) {}
+         [exec] (Gedit) { /usr/bin/gedit } </usr/share/pixmaps/gedit-icon.xpm>
+         [exec] (Nano) { x-terminal-emulator -T "Nano" -e /bin/nano} </usr/share/nano/nano-menu.xpm>
+         [exec] (Sublime) {sublime_text}
+         [exec] (Vim) { x-terminal-emulator -T "Vim" -e vim }
+      [end]
+      [submenu] (Graphics) {}
+         [exec] (ImageMagick) {/usr/bin/display logo:} </usr/share/pixmaps/display.xpm>
+         [exec] (LibreOffice Draw) {/usr/bin/libreoffice --draw} </usr/share/icons/hicolor/32x32/apps/libreoffice-draw.xpm>
+         [exec] (The GIMP) {/usr/bin/gimp} </usr/share/pixmaps/gimp.xpm>
+         [exec] (X Window Snapshot) {xwd | xwud} <>
+      [end]
+      [submenu] (File Management) {}
+         [exec] (Nautilus) {/usr/bin/nautilus} </usr/share/pixmaps/nautilus.xpm>
+         [exec] (Synapse) {synapse} <>
+      [end]
+      [submenu] (Sound & Video) {}
+         [exec] (VLC) {/usr/bin/vlc}
+      [end]
+#     [submenu] (Maths) {}
+#        [exec] (Calculator) {/usr/bin/gcalctool}
+#        [exec] (OpenOffice.org Calc) {/usr/bin/oocalc}
+#        [exec] (OpenOffice.org Math) {/usr/bin/oomath}
+#     [end]
+      [submenu] (Net) {}
+         [submenu] (Communication) {}
+            [exec] (heirloom-mailx) { x-terminal-emulator -T "heirloom-mailx" -e /usr/bin/heirloom-mailx} <>
+            [exec] (Pidgin) {/usr/bin/pidgin} </usr/share/pixmaps/pidgin-menu.xpm>
+            [exec] (Remmina) {/usr/bin/remmina} <>
+            [exec] (Telnet) { x-terminal-emulator -T "Telnet" -e /usr/bin/telnet} <>
+            [exec] (Xbiff) {xbiff} <>
+         [end]
+         [submenu] (File Transfer) {}
+            [exec] (Transmission BitTorrent Client (GTK\)) {/usr/bin/transmission-gtk} </usr/share/pixmaps/transmission.xpm>
+         [end]
+         [submenu] (Web Browsing) {}
+            [exec] (Google Chrome) {/opt/google/chrome/google-chrome} </opt/google/chrome/product_logo_32.xpm>
+         [end]
+      [end]
+      [submenu] (Programming) {}
+         [exec] (BeanShell (text\)) { x-terminal-emulator -T "BeanShell (text)" -e /usr/bin/bsh} <>
+         [exec] (BeanShell (windowed\)) {/usr/bin/xbsh} <>
+         [exec] (Erlang Shell) { x-terminal-emulator -T "Erlang Shell" -e /usr/bin/erl} </usr/share/pixmaps/erlang.xpm>
+         [exec] (GDB) { x-terminal-emulator -T "GDB" -e /usr/bin/gdb} <>
+         [exec] (Meld) {/usr/bin/meld} <>
+         [exec] (Python (v2.7\)) { x-terminal-emulator -T "Python (v2.7)" -e /usr/bin/python2.7} </usr/share/pixmaps/python2.7.xpm>
+         [exec] (SWI-Prolog) { x-terminal-emulator -T "SWI-Prolog" -e /usr/bin/swipl} <>
+         [exec] (SWI-Prolog (with XPCE\)) { x-terminal-emulator -T "SWI-Prolog (with XPCE)" -e /usr/bin/xpce} <>
+         [exec] (Tclsh8.5) { x-terminal-emulator -T "Tclsh8.5" -e /usr/bin/tclsh8.5} <>
+         [exec] (TkWish8.5) {x-terminal-emulator -e /usr/bin/wish8.5} <>
+         [exec] (Valkyrie - valgrind memckeck GUI frontent) {/usr/bin/valkyrie} <>
+      [end]
+      [submenu] (Shells) {}
+         [exec] (Bash) { x-terminal-emulator -T "Bash" -e /bin/bash --login} <>
+         [exec] (Dash) { x-terminal-emulator -T "Dash" -e /bin/dash -i} <>
+         [exec] (Sh) { x-terminal-emulator -T "Sh" -e /bin/sh --login} <>
+      [end]
+      [submenu] (System) {}
+         [submenu] (Administration) {}
+            [exec] (DSL/PPPoE configuration tool) { x-terminal-emulator -T "DSL/PPPoE configuration tool" -e /usr/sbin/pppoeconf} </usr/share/pixmaps/pppoeconf.xpm>
+            [exec] (Editres) {editres} <>
+            [exec] (Gnome Control Center) {/usr/bin/gnome-control-center} </usr/share/pixmaps/gnome-control-center.xpm>
+            [exec] (GNOME Network Tool) {/usr/bin/gnome-nettool} </usr/share/pixmaps/gnome-nettool.xpm>
+            [exec] (GNOME partition editor) {su-to-root -X -c /usr/sbin/gparted} </usr/share/pixmaps/gparted.xpm>
+            [exec] (pppconfig) { x-terminal-emulator -T "pppconfig" -e su-to-root -p root -c /usr/sbin/pppconfig} <>
+            [exec] (TeXconfig) { x-terminal-emulator -T "TeXconfig" -e /usr/bin/texconfig} <>
+            [exec] (Xclipboard) {xclipboard} <>
+            [exec] (Xfontsel) {xfontsel} <>
+            [exec] (Xkill) {xkill} <>
+            [exec] (Xrefresh) {xrefresh} <>
+         [end]
+         [submenu] (Hardware) {}
+            [exec] (Xvidtune) {xvidtune} <>
+         [end]
+         [submenu] (Language Environment) {}
+            [exec] (Input Method Swicher) { x-terminal-emulator -T "Input Method Swicher" -e /usr/bin/im-switch} <>
+         [end]
+         [submenu] (Monitoring) {}
+            [exec] (Conky) { x-terminal-emulator -T "Conky" -e /usr/bin/conky} <>
+            [exec] (GNOME system monitor) {/usr/bin/gnome-system-monitor} <>
+            [exec] (Pstree) { x-terminal-emulator -T "Pstree" -e /usr/bin/pstree.x11} </usr/share/pixmaps/pstree16.xpm>
+            [exec] (Top) { x-terminal-emulator -T "Top" -e /usr/bin/top} <>
+            [exec] (Xconsole) {xconsole -file /dev/xconsole} <>
+            [exec] (Xev) {x-terminal-emulator -e xev} <>
+            [exec] (Xload) {xload} <>
+         [end]
+         [submenu] (Package Management) {}
+            [exec] (Synaptic Package Manager) {synaptic-pkexec} </usr/share/synaptic/pixmaps/synaptic_32x32.xpm>
+         [end]
+         [submenu] (Security) {}
+            [exec] (Seahorse) {/usr/bin/seahorse} </usr/share/pixmaps/seahorse.xpm>
+         [end]
+      [end]
+      [submenu] (Terminal Emulators) {}
+         [exec] (Gnome Terminal) {/usr/bin/gnome-terminal} </usr/share/pixmaps/gnome-terminal.xpm>
+         [exec] (XTerm) {xterm} </usr/share/pixmaps/xterm-color_32x32.xpm>
+         [exec] (X-Terminal as root (GKsu\)) {/usr/bin/gksu -u root /usr/bin/x-terminal-emulator} </usr/share/pixmaps/gksu-debian.xpm>
+         [exec] (XTerm (Unicode\)) {uxterm} </usr/share/pixmaps/xterm-color_32x32.xpm>
+      [end]
+      [submenu] (Text) {}
+         [exec] (Character map) {/usr/bin/gucharmap} <>
+      [end]
+      [submenu] (Video) {}
+         [exec] (Totem) {/usr/bin/totem} </usr/share/pixmaps/totem.xpm>
+         [exec] (VLC media player) {/usr/bin/qvlc} </usr/share/icons/hicolor/32x32/apps/vlc.xpm>
+      [end]
+      [submenu] (Viewers) {}
+         [exec] (Evince) {/usr/bin/evince} </usr/share/pixmaps/evince.xpm>
+         [exec] (Eye of GNOME) {/usr/bin/eog} </usr/share/pixmaps/gnome-eog.xpm>
+         [exec] (Shotwell) {/usr/bin/shotwell} <>
+         [exec] (Xditview) {xditview} <>
+         [exec] (XDvi) {/usr/bin/xdvi} <>
+   [end]
+   [end]
+   [submenu] (Games) {}
+     [exec] (connect 4) {gnect}
+     [exec] (Shippy) {/usr/bin/shippy-sdl}
+     [exec] (Solitare) {/usr/bin/sol}
+     [exec] (Glaxium) {/usr/bin/glaxium}
+     [exec] (Mines) {/usr/bin/gnomine}
+     [exec] (Blackjack) {blackjack}
+     [exec] (5 or More) {glines}
+     [exec] (Astromenace) {astromenace}
+     [exec] (Space Sim) {celestia}
+   [end]
+   [submenu] (Fluxbox)
+      [config] (Configuration)
+      [submenu] (Styles) {}
+         [stylesdir] (/usr/share/fluxbox/styles)
+         [stylesdir] (~/.fluxbox/styles)
+      [end]
+      [submenu] (Backgrounds)
+         [submenu] (Wallpaper)
+            [wallpapers] (~/Wallpaper)
+         [end]
+      [end]
+      [workspaces] (Workspaces)
+      [exec] (Fbrun) {/usr/bin/fbrun}
+      [restart] (Restart)
+   [end] 
+   [reconfig] (Reconfigure)
+   [exec] (Lock Screen) {gnome-screensaver-command -al}
+   [restart] (Reboot)
+   [exec] (Shutdown) {gksu shutdown -P now}
+   [exit] (Logout)
+[end]
