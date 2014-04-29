@@ -27,6 +27,11 @@ let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 
+" Configure nerdtree
+map <Tab> :NERDTreeToggle<CR>
+" Close vim if nerdtree is the only thing open.
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
 filetype on
 filetype indent on
 filetype plugin on
