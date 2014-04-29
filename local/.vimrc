@@ -1,7 +1,23 @@
-set nocp
+set nocompatible
 
-" initialise pathogen
-call pathogen#infect()
+" Initialise Vundle
+
+filetype off " Required
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin('~/.vim/bundle')
+
+" Configure plugins
+Plugin 'gmarik/Vundle.vim'
+
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'kien/ctrlp.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdtree'
+
+call vundle#end()
+filetype plugin indent on
 
 syntax on
 set showmatch
@@ -10,7 +26,6 @@ set showmatch
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
-
 
 filetype on
 filetype indent on
