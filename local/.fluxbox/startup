@@ -21,7 +21,7 @@ gnome-settings-daemon &
 fbsetbg ~/Pictures/eclipse-from-leo.jpg &
 
 # Network manager app
-#nm-applet &
+nm-applet &
 
 # Power management app
 xfce4-power-manager &
@@ -50,7 +50,7 @@ sleep 1
    # MAKE SURE THAT APPS THAT KEEP RUNNING HAVE AN & AT THE END.
    # ipager &
    # gkrellm2 &
-   xfce4-power-manager &
+   #xfce4-power-manager &
 } &
  
 wait $fbpid
