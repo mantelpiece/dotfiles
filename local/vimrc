@@ -1,7 +1,6 @@
 set nocompatible
 
 " Initialise Vundle
-
 filetype off " Required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin('~/.vim/bundle')
@@ -65,7 +64,6 @@ set nowrap
 " Highlight stuff outside the 80col border
 highlight rightMargin ctermbg=grey guibg=grey ctermfg=black guifg=black
 match rightMargin /.\%>72v/
-
 
 " In case I use the netrw file browser
 let g:netrw_liststyle=3
