@@ -1,0 +1,11 @@
+# Env variables for the Peaks nectar server
+export NEC=123
+
+# Env variables for Deltarch servers, bpstudds 2013-12-12
+export INFRADEV=bpstudds@infradev.eng.unimelb.edu.au
+export BAMBOO=bpstudds@192.168.2.4
+export SOA=bpstudds@115.146.85.103
+
+# Env variable required for sonar-runner, bpstudds 2013-12-12
+export SONAR_RUNNER_HOME=/home/brendan/opt/sonar-runner
+
