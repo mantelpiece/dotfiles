@@ -1,39 +1,124 @@
-set nocompatible
+set nocompatible              " set improved, required.
+filetype off                  " required
 
-" Initialise Vundle
-filetype off " Required
+""""""""""""""""""""""""""""""PLUGINS"""""""""""""""""""""""""""""""""""
+
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin('~/.vim/bundle')
-
-" Configure plugins
+call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
-
+Plugin 'sudo.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'groovy.vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'bling/vim-airline'
 
-call vundle#end()
-filetype plugin indent on
+call vundle#end()             " required
+"filetype plugin indent on     " required
 
-syntax on
-set showmatch
+" NERDTress File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+ exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+ exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
 
-" Configure CtrlP plugin
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
+au VimEnter * call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
+au VimEnter * call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+au VimEnter * call NERDTreeHighlightFile('html', 'cyan', 'none', 'cyan', '#151515')
+au VimEnter * call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
+au VimEnter * call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+au VimEnter * call NERDTreeHighlightFile('coffee', 'red', 'none', 'red', '#151515')
+au VimEnter * call NERDTreeHighlightFile('js', 'yellow', 'none', 'yellow', '#151515')
 
-" Configure nerdtree
-map <Tab> :NERDTreeToggle<CR>
+" Syntasic settings
+" Update location list automatically (Otherwise call to :Error is required).
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_aggregate_errors=1
+
+" Airline settings
+" Show buffer 'tabs', use vertical separator.
+"let g:airline#extensions#tabline#enabled=1
+"let g:airline#extensions#tabline#left_sep = ' '
+"let g:airline#extensions#tabline#left_alt_sep = '|'
+
+" Ctrlp settings
+let g:ctrlp_map=''
+set wildignore+=*/tmp/*,*/node_modules/*,*/lib/*,*.so,*.swp,*.zip
+
+""""""""""""""""""""""""""""""SETTINGS"""""""""""""""""""""""""""""""""
+
+set t_Co=256
+
+" Try and fix weird colour in tmux
+set t_ut=
+
+set ttimeoutlen=50
+set laststatus=2
+let g:airline_powerline_fonts=1
+
+" Show matches as typing search regex.
+set incsearch
+
+" Enable completion in the command line
+set wildmenu
+set wildmode=longest:full,full
+
+" Hide buffers when they are abandoned.
+set hidden
+
+" Lines to the cursor when scrolling via j/k
+set so=7
+
+" Do not show matching braces.
+set noshowmatch
+
+" Use magic with search regexs.
+set magic
+
+" Disable error bells.
+set noerrorbells
+set novisualbell
+set t_vb=
+
+""""""""""""""""""""""""""""EDITOR SETTINGS""""""""""""""""""""""""""""
+
+syntax enable
+
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set smartindent
+set autoindent
+
+set number
+set cursorline
+
+colorscheme Tomorrow-Night-Eighties
+
+set encoding=utf8
+
+" Highlight characters outside the 80col border
+"highlight rightMargin ctermbg=grey guibg=grey ctermfg=black guifg=black
+"match rightMargin /.\%>104v/
+
+""""""""""""""""""""""""""""KEY BINDINGS"""""""""""""""""""""""""""""""
+
+let mapleader="\\"
+
+noremap <silent> <Leader><Tab> :NERDTreeToggle<CR>
+noremap <silent> <Leader>p :CtrlP<CR>
+noremap <silent> <Leader>t :TagbarToggle<CR>
+noremap <silent> <Leader>q :xall<CR>
+
+""""""""""""""""""""""""""""AUTO COMMANDS""""""""""""""""""""""""""""""
+
 " Close vim if nerdtree is the only thing open.
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-filetype on
-filetype indent on
-filetype plugin on
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " Make sure make files use tab characters
 autocmd Filetype make setlocal noexpandtab
@@ -42,29 +127,15 @@ autocmd Filetype make setlocal softtabstop=0
 " Fix up some file types
 autocmd BufNewFile,BufRead *.md set filetype=markdown
 autocmd BufNewFile,BufRead *.sum set filetype=sum
+autocmd BufNewFile,BufRead *.gradle set filetype=groovy
 
-colorscheme default
+autocmd InsertLeave * :GitGutterAll
 
-set hlsearch
-set incsearch
-set history=50
+""""""""""""""""""""""""""""SPELLING""""""""""""""""""""""""""""""""""
+noremap <leader>ss :setlocal spell! spelllang=en_au<cr>
 
-set backspace=2
-set tabstop=2
-set shiftwidth=2
-set smartindent
-set et
-
-set showmode
-set showcmd
-set number 
-set ruler
-set nowrap
-
-" Highlight stuff outside the 80col border
-highlight rightMargin ctermbg=grey guibg=grey ctermfg=black guifg=black
-match rightMargin /.\%>72v/
-
-" In case I use the netrw file browser
-let g:netrw_liststyle=3
+noremap <leader>sn ]s
+noremap <leader>sp [s
+noremap <leader>sa zg
+noremap <leader>s? z=
 
