@@ -15,9 +15,12 @@
 [alias]
 	lgg = !git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s <%ai> %C(bold blue)<%an>%Creset' --abbrev-commit --date=iso
 	lggy = !git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s <%ai> %C(bold blue)<%an>%Creset' --abbrev-commit --date=iso
+	staged = !git diff --cached
 [push]
 	default = upstream
 [url "https://"]
 	insteadOf = git://
-[credential]
-	helper = /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
+#[credential]
+  #helper = /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
+[fetch]
+	prune = true

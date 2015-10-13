@@ -5,10 +5,27 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# Bash git completion and prompting
+source /usr/share/git/completion/git-completion.bash
+source /usr/share/git/completion/git-prompt.sh
+
 PS1='[\u@\h \W]\$ '
+
+# Include common env settings
+if [ -f ~/.dotfiles/local/bash_env ]; then
+  . ~/.dotfiles/local/bash_env
+fi
 
 # Include common bash settings
 if [ -f ~/.dotfiles/local/bash_common ]; then
   . ~/.dotfiles/local/bash_common
 fi
+
+# Include arch specific aliases
+if [ -f ~/.dotfiles/local/bash_aliases_arch ]; then
+  . ~/.dotfiles/local/bash_aliases_arch
+fi
+
+export PATH='/usr/local/texlive/2014/bin/x86_64-linux/':$PATH
+export CHROME_BIN=`which chromium`
 
