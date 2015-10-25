@@ -18,6 +18,9 @@ Plugin 'groovy.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 
+" Colour themes
+Plugin 'Lokaltog/vim-distinguished'
+
 call vundle#end()             " required
 "filetype plugin indent on     " required
 
@@ -39,9 +42,10 @@ au VimEnter * call NERDTreeHighlightFile('js', 'yellow', 'none', 'yellow', '#151
 " Update location list automatically (Otherwise call to :Error is required).
 let g:syntastic_always_populate_loc_list=1
 let g:syntastic_aggregate_errors=1
+let g:syntastic_check_on_open=1
 
 " Airline settings
-" Show buffer 'tabs', use vertical separator.
+" Show buffer 'tabs' and use vertical separator.
 "let g:airline#extensions#tabline#enabled=1
 "let g:airline#extensions#tabline#left_sep = ' '
 "let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -49,6 +53,10 @@ let g:syntastic_aggregate_errors=1
 " Ctrlp settings
 let g:ctrlp_map=''
 set wildignore+=*/tmp/*,*/node_modules/*,*/lib/*,*.so,*.swp,*.zip
+
+" Fugitive
+" Review staged hunks
+command Greview :Git! diff --staged
 
 """"""""""""""""""""""""""""""SETTINGS"""""""""""""""""""""""""""""""""
 
@@ -110,10 +118,15 @@ set encoding=utf8
 
 let mapleader="\\"
 
+" Leader mappings
 noremap <silent> <Leader><Tab> :NERDTreeToggle<CR>
-noremap <silent> <Leader>p :CtrlP<CR>
+noremap <silent> <Leader>f :CtrlP<CR>
 noremap <silent> <Leader>t :TagbarToggle<CR>
 noremap <silent> <Leader>q :xall<CR>
+nnoremap <leader>gr :Greview<cr>
+
+" Easier buffer switching.
+nnoremap <F5> :buffers<CR>:buffer<Space>
 
 """"""""""""""""""""""""""""AUTO COMMANDS""""""""""""""""""""""""""""""
 
