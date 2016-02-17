@@ -17,6 +17,10 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'groovy.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
+Plugin 'embear/vim-localvimrc'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 
 " Colour themes
 Plugin 'Lokaltog/vim-distinguished'
@@ -57,6 +61,12 @@ set wildignore+=*/tmp/*,*/node_modules/*,*/lib/*,*.so,*.swp,*.zip
 " Fugitive
 " Review staged hunks
 command Greview :Git! diff --staged
+
+" Ultisnips
+let g:UltiSnipsDirectories=['~/.vim/bundle/vim-snippets/UltiSnips']
+
+" vim-localvimrc
+let g:localvimrc_persistent=2
 
 """"""""""""""""""""""""""""""SETTINGS"""""""""""""""""""""""""""""""""
 
@@ -128,6 +138,11 @@ nnoremap <leader>gr :Greview<cr>
 " Easier buffer switching.
 nnoremap <F5> :buffers<CR>:buffer<Space>
 
+" Snippet settings
+let g:UltiSnipsExpandTrigger="<c-e>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
 """"""""""""""""""""""""""""AUTO COMMANDS""""""""""""""""""""""""""""""
 
 " Close vim if nerdtree is the only thing open.
@@ -151,4 +166,3 @@ noremap <leader>sn ]s
 noremap <leader>sp [s
 noremap <leader>sa zg
 noremap <leader>s? z=
-
