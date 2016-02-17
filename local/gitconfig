@@ -24,3 +24,5 @@
   #helper = /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
 [fetch]
 	prune = true
+[diff]
+	submodule = log
