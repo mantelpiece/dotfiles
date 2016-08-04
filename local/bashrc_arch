@@ -26,10 +26,14 @@ if [ -f ~/.dotfiles/local/bash_aliases_arch ]; then
   . ~/.dotfiles/local/bash_aliases_arch
 fi
 
-# Load NVM
-export NVM_DIR="$HOME/opt/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+# Include bash autocompletions
+if [ -f ~/.bash_completion.d/git-flow-completion.bash ]; then
+  . ~/.bash_completion.d/git-flow-completion.bash
+fi
 
 export PATH='/usr/local/texlive/2014/bin/x86_64-linux/':$PATH
 export PATH='/usr/local/heroku/bin':$PATH
 export CHROME_BIN=`which chromium`
+
+export NVM_DIR="/home/brendan/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

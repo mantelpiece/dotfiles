@@ -13,8 +13,8 @@
    untracked = magenta
 
 [alias]
-	lgg = !git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s <%ai> %C(bold blue)<%an>%Creset' --abbrev-commit --date=iso
-	lggy = !git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s <%ai> %C(bold blue)<%an>%Creset' --abbrev-commit --date=iso
+	lgg = !git log -n10 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s <%ai> %C(bold blue)<%an>%Creset' --abbrev-commit --date=iso
+	lggy = !git log -n10 --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s <%ai> %C(bold blue)<%an>%Creset' --abbrev-commit --date=iso
 	staged = !git diff --cached
 [push]
 	default = upstream
