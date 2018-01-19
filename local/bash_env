@@ -9,3 +9,5 @@ export SOA=bpstudds@115.146.85.103
 # Env variable required for sonar-runner, bpstudds 2013-12-12
 export SONAR_RUNNER_HOME=/home/brendan/opt/sonar-runner
 
+export GPODDER_DOWNLOAD_DIR=/media/podcasts
+
