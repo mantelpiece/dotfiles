@@ -14,7 +14,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Add my local opt directory to path, bpstudds 2013-12-12
-export PATH=~/opt/bin:~/opt:$PATH
+export PATH=~/opt/bin:$PATH
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options

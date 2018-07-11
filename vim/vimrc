@@ -28,6 +28,10 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 
 " Colour themes
 Plugin 'Lokaltog/vim-distinguished'
+Plugin 'chriskempson/base16-vim'
+
+
+" For base16-vim?
 
 call vundle#end()             " required
 "filetype plugin indent on     " required
@@ -136,6 +140,12 @@ set t_vb=
 " Use ack for grepping
 set grepprg=ack
 
+" Fancy wrapping?
+set wrap
+set linebreak
+set breakindent
+set showbreak=..
+
 """"""""""""""""""""""""""""EDITOR SETTINGS""""""""""""""""""""""""""""
 
 syntax enable
@@ -149,7 +159,12 @@ set autoindent
 set number
 set cursorline
 
-colorscheme Tomorrow-Night-Eighties
+" Maybe use base16 doodads?
+if filereadable(expand("~/.vimrc_background"))
+    let base16colorspace=256
+    source ~/.vimrc_background
+endif
+" colorscheme Tomorrow-Night-Eighties
 
 set encoding=utf8
 
