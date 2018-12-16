@@ -1,21 +1,3 @@
-# Alias definitions.
-if [ -f ~/.dotfiles/local/bash_aliases ]; then
-    . ~/.dotfiles/local/bash_aliases
-fi
-
-# Env definitions
-if [ -f ~/.bash_env ]; then
-  . ~/dotfiles/local/.bash_env
-fi
- 
-# enable programmable completion features
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
-fi
-
-# Add my local opt directory to path, bpstudds 2013-12-12
-export PATH=~/opt/bin:$PATH
-
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth

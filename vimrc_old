@@ -25,6 +25,7 @@ Plugin 'embear/vim-localvimrc'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'leafgarland/typescript-vim'
 
 " Colour themes
 Plugin 'Lokaltog/vim-distinguished'
@@ -73,6 +74,7 @@ let g:syntastic_check_on_wq = 0
 
 " Note: For this to work eslint must be installed locally to project
 let g:syntastic_javascript_checkers = [ 'eslint' ]
+let g:syntastic_typescript_checkers = [ 'eslint' ]
 " Point syntastic checker at locally installed `eslint` if it exists.
 
 fun! s:SetSyntasticEslintExec()
@@ -80,6 +82,11 @@ fun! s:SetSyntasticEslintExec()
   " echo b:syntastic_javascript_eslint_exec
 endfunction
 autocmd FileType javascript exec s:SetSyntasticEslintExec()
+
+
+" Python linter flake8
+let g:flake8_show_in_gutter = 1
+let g:syntastic_python_checkers = [ 'pylint' ]
 
 " Airline settings
 " Show buffer 'tabs' and use vertical separator.
@@ -105,6 +112,9 @@ let g:localvimrc_persistent=2
 """"""""""""""""""""""""""""""SETTINGS"""""""""""""""""""""""""""""""""
 
 set t_Co=256
+
+" Enable backspace over autoindent, eol, and before start of insert
+set backspace=indent,eol,start
 
 " Try and fix weird colour in tmux
 set t_ut=
@@ -150,14 +160,14 @@ set showbreak=..
 
 syntax enable
 
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=0 " Use the value of tabstop for shiftwidth
 set expandtab
 set smartindent
 set autoindent
 
 set number
-set cursorline
+" set cursorline
 
 " Maybe use base16 doodads?
 if filereadable(expand("~/.vimrc_background"))
@@ -178,9 +188,11 @@ let mapleader="\\"
 
 " Leader mappings
 noremap <silent> <Leader><Tab> :NERDTreeToggle <CR>
+noremap <silent> <Leader>g :NERDTreeFind<CR>
 noremap <silent> <Leader>f :CtrlP<CR>
 noremap <silent> <Leader>t :TagbarToggle<CR>
 noremap <silent> <Leader>q :xall<CR>
+noremap <silent> <Leader>c :b#\|bd#<CR>
 noremap <silent> <Leader>en :cnext<CR>
 noremap <silent> <Leader>ep :cprev<CR>
 
@@ -201,8 +213,12 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " Make sure make files use tab characters
-autocmd Filetype make setlocal noexpandtab
-autocmd Filetype make setlocal softtabstop=0
+autocmd Filetype make           setlocal noexpandtab
+autocmd Filetype make           setlocal softtabstop=0
+autocmd Filetype sh             setlocal tabstop=2
+autocmd Filetype typescript     setlocal tabstop=2
+autocmd Filetype yaml           setlocal tabstop=2
+autocmd Filetype markdown       setlocal tabstop=2
 
 " Fix up some file types
 autocmd BufNewFile,BufRead *.md set filetype=markdown
