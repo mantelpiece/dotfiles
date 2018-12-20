@@ -2,9 +2,8 @@
 set backspace=indent,eol,start
 
 " Buffers
-" set hidden " I'm not sure what this does? 'Hide buffers when they are
-" abandoned'?
-"
+set hidden " I think this lets you change without saving
+
 " Colours
 set t_ut=
 set t_Co=256
@@ -25,8 +24,7 @@ set magic " use magic with regexs
 set noshowmatch " do not show matching braces
 
 " Window
-" Lines to the cursor when scrolling via j/k
-set so=7
+set scrolloff=7
 
 " Disable error bells.
 set noerrorbells

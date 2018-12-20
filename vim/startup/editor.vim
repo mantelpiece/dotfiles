@@ -6,9 +6,11 @@ set encoding=utf8
 
 set tabstop=4
 set shiftwidth=0 " Use the value of tabstop for shiftwidth
+set softtabstop=0
+
+set autoindent
 set expandtab
 set smartindent
-set autoindent
 
 set number
 " set cursorline

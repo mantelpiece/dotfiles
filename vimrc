@@ -1,6 +1,5 @@
 " vimrc
 
-let mapleader = ","
 
 runtime startup/settings.vim
 runtime startup/plugins.vim
