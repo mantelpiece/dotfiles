@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 alias ll='/usr/local/bin/gls -alF --color=auto --group-directories-first'
 alias la='/usr/local/bin/gls -A --color=auto --group-directories-first'
 

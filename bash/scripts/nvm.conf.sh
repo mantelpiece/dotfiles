@@ -1,11 +1,12 @@
+#!/usr/bin/env bash
+
 export NVM_DIR=~/.nvm
 
 if [[ -s "$NVM_DIR/nvm.sh" ]]; then
   # Load NVM
-  . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-  if [[ $? -ne 0 ]]; then
-    exit 0;
+  if ! . "$NVM_DIR/nvm.sh"; then
+    echo "Failed to load nvm"
+    return
   fi
 
   if [[ -s "$NVM_DIR/bash_completion" ]]; then
@@ -14,9 +15,9 @@ if [[ -s "$NVM_DIR/nvm.sh" ]]; then
 
   load-nvmrc() {
     if [[ -f .nvmrc && -r .nvmrc ]]; then
-      nvm use
-    elif [[ `nvm version` != `nvm version default` ]]; then
-      nvm use default
+      nvm use --delete-prefix
+    elif [[ $(nvm version) != $(nvm version default) ]]; then
+      nvm use --delete-prefix default
     fi
   }
 

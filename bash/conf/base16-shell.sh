@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 defaultDir="$HOME/.config/base16-shell"
 base16ShellDir="${base16ShellDir:-$defaultDir}"
 
