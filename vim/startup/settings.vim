@@ -15,7 +15,11 @@ set wildmode=longest:full,full
 " Timeouts - 3s on mappings, 0.5s on keycodes
 set timeout timeoutlen=3000 ttimeoutlen=100
 set laststatus=2
-let g:airline_powerline_fonts=1
+
+" Mouse
+set ttymouse=xterm2
+set mouse=a
+
 
 " Search
 set grepprg=ack " use ack for grep
