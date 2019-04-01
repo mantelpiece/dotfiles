@@ -5,14 +5,14 @@ let mapleader=","
 " Vim
 noremap <silent> <Leader>c :b#\|bd#<CR>
 noremap <silent> <Leader>q :xall<CR>
-noremap <Leader>v :e ~/.vimrc<CR>
-noremap <Leader>vr :source ~/.vimrc<CR>:PlugInstall<CR>:exe ":echo 'vimrc reloaded'"<CR>"
+noremap <Leader>ve :e ~/.vimrc<CR>
+noremap <Leader>vr :source ~/.vimrc<CR>:PlugInstall<CR>:bd<CR>:exe ":echo 'vimrc reloaded'"<CR>"
 
 
 " Files and file navigation
-noremap <silent> <Leader>f :NERDTreeToggle <CR>
+noremap <silent> <Leader>ff :NERDTreeToggle <CR>
 noremap <silent> <Leader>fc :NERDTreeFind<CR>
-noremap <silent> <Leader>ff :CtrlP<CR>
+" noremap <silent> <Leader>ff :CtrlP<CR>
 noremap <silent> <Leader>ft :TagbarToggle<CR>
 
 
