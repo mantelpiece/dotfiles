@@ -12,8 +12,8 @@ set t_Co=256
 set wildmenu
 set wildmode=longest:full,full
 
-" Timeouts - 3s on mappings, 0.5s on keycodes
-set timeout timeoutlen=3000 ttimeoutlen=100
+" Statusline
+set noshowmode
 set laststatus=2
 
 " Mouse

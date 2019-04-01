@@ -10,12 +10,15 @@ call plug#begin('~/.vim/plugged')
 
 " Plugin 'sudo.vim'
 Plug 'chriskempson/base16-vim'
+Plug 'mattn/emmet-vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/syntastic'
 Plug 'mtscout6/syntastic-local-eslint.vim' " Use local eslint install
-Plug 'bling/vim-airline'
 Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'

@@ -2,6 +2,8 @@
 
 syntax enable
 
+set autowrite
+
 set encoding=utf8
 
 set tabstop=4
