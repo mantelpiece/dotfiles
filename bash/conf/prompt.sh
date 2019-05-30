@@ -3,9 +3,9 @@
 function ___last_exit () {
   #shellcheck disable=SC2181
   if [[ "$1" == "0" ]]; then
-    echo -e "$green"':)'
+    echo -e "$greenFg"':)'
   else
-    echo -e "$red"':('
+    echo -e "$redFg"':('
   fi
 }
 
@@ -26,11 +26,11 @@ function ___git_info () {
   fi
 }
 
+# shellcheck disable=2155
 function __prompt_command () {
   local exit="$?"
   PS1=""
 
-  local cyan=40
   local red=196
   local green=22
   local blue=26
@@ -41,25 +41,23 @@ function __prompt_command () {
 
   local greenFg="\001$(tput setaf $green)\002"
   local redFg="\001$(tput setaf $red)\002"
-  local cyanFg="\001$(tput setaf $cyan)\002"
   local greyFg="\001$(tput setaf $grey)\002"
   local blueFg="\001$(tput setaf $blue)\002"
 
   local greyBg="\001$(tput setab $grey)\002"
-  local cyanBg="\001$(tput setab $cyan)\002"
   local blueBg="\001$(tput setab $blue)\002"
   local greenBg="\001$(tput setab $green)\002"
 
-  local clrFg="\[$(tput setaf 0)\]"
-  local clrBg="\[$(tput sgr0)\]"
+  # local clrFg="\[$(tput setaf 0)\]"
+  # local clrBg="\[$(tput sgr0)\]"
   local clr='\[\e[0m\]'
 
   gitInfo=$(___git_info)
   if [[ -n "$gitInfo" ]]; then
-    PS1+="$reset$greenBg $gitInfo $greenFg$blueBg$sep"
+    PS1+="$clr$greenBg $gitInfo $greenFg$blueBg$sep"
   fi
-  PS1+="$reset$blueBg \W $blueFg$greyBg$sep"
-  PS1+="$reset$greyBg \$(___last_exit $exit) $reset$greyFg$sep"
-  PS1+="$reset "
+  PS1+="$clr$blueBg \W $blueFg$greyBg$sep"
+  PS1+="$clr$greyBg \$(___last_exit $exit) $clr$greyFg$sep"
+  PS1+="$clr "
 }
 PROMPT_COMMAND=__prompt_command
