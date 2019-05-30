@@ -32,7 +32,7 @@ function __prompt_command () {
   PS1=""
 
   local red=196
-  local green=22
+  local green=35
   local blue=26
   local grey=238
 
@@ -57,7 +57,7 @@ function __prompt_command () {
     PS1+="$clr$greenBg $gitInfo $greenFg$blueBg$sep"
   fi
   PS1+="$clr$blueBg \W $blueFg$greyBg$sep"
-  PS1+="$clr$greyBg \$(___last_exit $exit) $clr$greyFg$sep"
+  PS1+="$clr$greyBg $(___last_exit $exit) $clr$greyFg$sep"
   PS1+="$clr "
 }
 PROMPT_COMMAND=__prompt_command
