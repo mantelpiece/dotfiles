@@ -6,14 +6,12 @@
 
 bashDotfileRoot="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
-# Prompt
-PS1='[\u@\h \W]\$ '
-
 # Load configs
 . "$bashDotfileRoot/conf/shell-options.sh"
 . "$bashDotfileRoot/conf/env.sh"
 . "$bashDotfileRoot/conf/aliases.sh"
 . "$bashDotfileRoot/conf/completion.sh"
+. "$bashDotfileRoot/conf/prompt.sh"
 
 . "$bashDotfileRoot/conf/base16-shell.sh"
 . "$bashDotfileRoot/conf/python.sh"
