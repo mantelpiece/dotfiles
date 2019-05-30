@@ -40,26 +40,3 @@ au VimEnter * call NERDTreeHighlightFile('h', 'cyan', 'none', 'cyan', '#151515')
 let NERDTreeIgnore = [ '\.swp' ]
 
 
-" Syntasic settings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-" let g:syntastic_aggregate_errors=1 " Something I had?
-
-let g:syntastic_javascript_checkers = [ 'eslint' ]
-let g:syntastic_python_checkers = [ 'pylint' ]
-let g:syntastic_sh_checkers = [ 'shellcheck' ]
-let g:syntastic_typescript_checkers = [ 'eslint' ]
-
-let g:syntastic_sh_shellcheck_args = "-x"
-
-" Point syntastic checker at locally installed `eslint` if it exists.
-fun! s:SetSyntasticEslintExec()
-  let b:syntastic_javascript_eslint_exec = findfile('node_modules/.bin/eslint', '.;')
-endfunction
-autocmd FileType javascript exec s:SetSyntasticEslintExec()
