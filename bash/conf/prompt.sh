@@ -1,11 +1,20 @@
 #!/usr/bin/env bash
 
+function ___aws_env () {
+  [[ -n "$__AWS_AUTHED_ENV" ]] || return
+  echo -e "$__AWS_AUTHED_ENV"
+}
+
 function ___last_exit () {
   #shellcheck disable=SC2181
   if [[ "$1" == "0" ]]; then
-    echo -e "$greenFg"':)'
+    happy=$'\U0001F929'
+    echo -e "$happy "
+    # echo -e "$greenFg"':)'
   else
-    echo -e "$redFg"':('
+    sad=$'\U0001F92c'
+    echo -e "$sad "
+    # echo -e "$redFg"':('
   fi
 }
 
@@ -29,12 +38,13 @@ function ___git_info () {
 # shellcheck disable=2155
 function __prompt_command () {
   local exit="$?"
-  PS1=""
+  PS1="\n"
 
   local red=196
   local green=35
   local blue=26
   local grey=238
+  local khaki=100
 
   local sep=$'\ue0b0'
   local branchIcon=$'\ue0a0'
@@ -47,6 +57,7 @@ function __prompt_command () {
   local greyBg="\001$(tput setab $grey)\002"
   local blueBg="\001$(tput setab $blue)\002"
   local greenBg="\001$(tput setab $green)\002"
+  local khakiBg="\001$(tput setab $khaki)\002"
 
   # local clrFg="\[$(tput setaf 0)\]"
   # local clrBg="\[$(tput sgr0)\]"
@@ -58,6 +69,8 @@ function __prompt_command () {
   fi
   PS1+="$clr$blueBg \W $blueFg$greyBg$sep"
   PS1+="$clr$greyBg $(___last_exit $exit) $clr$greyFg$sep"
-  PS1+="$clr "
+  PS1+="$clr\n"
+  PS1+="[$(___aws_env)]$clr "
+  PS1+="> "
 }
 PROMPT_COMMAND=__prompt_command
