@@ -1,11 +1,22 @@
 """"""""""""""""""""""""""""EDITOR SETTINGS""""""""""""""""""""""""""""
 scriptencoding utf8
+set encoding=utf8
 
 syntax enable
 
 set autowrite
 
-set encoding=utf8
+" Set cursor in iterm for MacOS.
+" let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+" let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+" let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+" Set cursor in tmux iterm for MacOS.
+" Seems to also work just in iterm but the above doesn't.
+let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+
 
 set tabstop=4
 set shiftwidth=0 " Use the value of tabstop for shiftwidth
