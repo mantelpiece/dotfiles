@@ -1,14 +1,3 @@
-" Emmet - HTML/JSX 'autocompletion'
-" %h2#tagline.hero-text => <h2 id=tagline class=hero-text></h2>
-let g:user_emmet_install_global = 0
-autocmd FileType html,css,javascript EmmetInstall
-
-let g:user_emmet_settings={
-    \ 'javascript.js': { 'extends': 'jsx' },
-    \ 'javascript.jsx': { 'extends': 'jsx' }
-\ }
-
-
 " Fugitive
 " Review staged hunks
 command! Greview :Git! diff --staged
@@ -26,16 +15,26 @@ function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
  exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 endfunction
 
-au VimEnter * call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
-au VimEnter * call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+" Docs
+au VimEnter * call NERDTreeHighlightFile('md', 'magenta', 'none', '#3366FF', '#151515')
+au VimEnter * call NERDTreeHighlightFile('json', 'magenta', 'none', 'yellow', '#151515')
+
+" Web
 au VimEnter * call NERDTreeHighlightFile('html', 'cyan', 'none', 'cyan', '#151515')
-au VimEnter * call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
 au VimEnter * call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
-au VimEnter * call NERDTreeHighlightFile('coffee', 'red', 'none', 'red', '#151515')
+
+" Source
 au VimEnter * call NERDTreeHighlightFile('js', 'yellow', 'none', 'yellow', '#151515')
-au VimEnter * call NERDTreeHighlightFile('o', 'grey', 'none', 'grey', '#151515')
+au VimEnter * call NERDTreeHighlightFile('jsx', 'yellow', 'none', 'yellow', '#151515')
+
 au VimEnter * call NERDTreeHighlightFile('cpp', 'yellow', 'none', 'yellow', '#151515')
-au VimEnter * call NERDTreeHighlightFile('h', 'cyan', 'none', 'cyan', '#151515')
+au VimEnter * call NERDTreeHighlightFile('h', 'darkyellow', 'none', 'cyan', '#151515')
+
+" Specs
+au VimEnter * call NERDTreeHighlightFile('.spec.js', 'darkyellow', 'none', 'yellow', '#151515')
+
+" Generated
+au VimEnter * call NERDTreeHighlightFile('o', 'grey', 'none', 'grey', '#151515')
 
 let NERDTreeIgnore = [ '\.swp' ]
 

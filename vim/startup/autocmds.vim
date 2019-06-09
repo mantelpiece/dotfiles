@@ -8,5 +8,4 @@ autocmd BufNewFile,BufRead *.sum set filetype=sum
 autocmd BufNewFile,BufRead *.gradle set filetype=groovy
 
 
-" Update GitGutter
-autocmd InsertLeave * :GitGutterAll
+autocmd InsertLeave * :%s/\s\+$//e

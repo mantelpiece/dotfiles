@@ -2,7 +2,14 @@
 
 let mapleader=","
 
+
 " Vim
+
+" C-c is _not_ the same as Esc to exit insert mode. <C-[> is but there's no
+" way I'm fixing that habit now. Double <Esc> to avoid delay waiting for
+" another char if there is a mapping with <Esc>
+inoremap <C-c> <Esc><Esc>
+
 noremap <silent> <Leader>c :b#\|bd#<CR>
 noremap <silent> <Leader>q :xall<CR>
 noremap <Leader>ve :e ~/.vimrc<CR>

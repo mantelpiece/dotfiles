@@ -11,7 +11,6 @@ call plug#begin('~/.vim/plugged')
 " Plugin 'sudo.vim'
 Plug 'w0rp/ale'
 Plug 'chriskempson/base16-vim'
-Plug 'mattn/emmet-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdtree'
