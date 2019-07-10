@@ -8,4 +8,4 @@ autocmd BufNewFile,BufRead *.sum set filetype=sum
 autocmd BufNewFile,BufRead *.gradle set filetype=groovy
 
 
-autocmd InsertLeave * :%s/\s\+$//e
+autocmd BufWritePre * :%s/\s\+$//e
