@@ -19,3 +19,5 @@ bashDotfileRoot="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 # Configure nvm
 . "$bashDotfileRoot/scripts/nvm.conf.sh"
+
+. "$bashDotfileRoot/scripts/running.sh"
