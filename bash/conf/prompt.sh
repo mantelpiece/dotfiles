@@ -1,8 +1,20 @@
 #!/usr/bin/env bash
 
 function ___aws_env () {
-  [[ -n "$__AWS_AUTHED_ENV" ]] || return
-  echo -e "$__AWS_AUTHED_ENV"
+  if [[ -n "$__AWS_AUTHED_ENV" ]]; then
+    echo -e "[$__AWS_AUTHED_ENV] "
+  fi
+}
+
+function __conda_env () {
+  condaEnv="$CONDA_DEFAULT_ENV"
+  if [[ -n "$condaEnv" ]]; then
+    if [[ "$condaEnv" == "base" ]]; then
+      echo "($redFg$condaEnv$clr) "
+    else
+      echo "($condaEnv) "
+    fi
+  fi
 }
 
 function ___last_exit () {
@@ -70,7 +82,7 @@ function __prompt_command () {
   PS1+="$clr$blueBg \W $blueFg$greyBg$sep"
   PS1+="$clr$greyBg $(___last_exit $exit) $clr$greyFg$sep"
   PS1+="$clr\n"
-  PS1+="[$(___aws_env)]$clr "
+  PS1+="$(___aws_env)$(__conda_env)"
   PS1+="> "
 }
 PROMPT_COMMAND=__prompt_command
