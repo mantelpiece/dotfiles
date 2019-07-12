@@ -39,3 +39,6 @@ au VimEnter * call NERDTreeHighlightFile('o', 'grey', 'none', 'grey', '#151515')
 let NERDTreeIgnore = [ '\.swp' ]
 
 
+
+" Vimwiki diary template
+au BufNewFile ~/vimwiki/diary/*.wiki :silent 0r !~/.vim/bin/generate-vimwiki-diary-template '%'

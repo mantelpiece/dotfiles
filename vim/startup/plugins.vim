@@ -20,6 +20,7 @@ Plug 'mxw/vim-jsx'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
+Plug 'vimwiki/vimwiki'
 
 " Initialize plugin system
 call plug#end()
