@@ -1,3 +1,9 @@
+" ALE linters
+let g:ale_linters={
+    \ 'python': ['pylint'],
+    \ }
+
+
 " Fugitive
 " Review staged hunks
 command! Greview :Git! diff --staged
@@ -24,6 +30,7 @@ au VimEnter * call NERDTreeHighlightFile('html', 'cyan', 'none', 'cyan', '#15151
 au VimEnter * call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
 
 " Source
+au VimEnter * call NERDTreeHighlightFile('py', 'yellow', 'none', 'yellow', '#151515')
 au VimEnter * call NERDTreeHighlightFile('js', 'yellow', 'none', 'yellow', '#151515')
 au VimEnter * call NERDTreeHighlightFile('jsx', 'yellow', 'none', 'yellow', '#151515')
 
@@ -32,13 +39,19 @@ au VimEnter * call NERDTreeHighlightFile('h', 'darkyellow', 'none', 'cyan', '#15
 
 " Specs
 au VimEnter * call NERDTreeHighlightFile('.spec.js', 'darkyellow', 'none', 'yellow', '#151515')
+au VimEnter * call NERDTreeHighlightFile('test*.py', 'darkyellow', 'none', 'yellow', '#151515')
 
 " Generated
 au VimEnter * call NERDTreeHighlightFile('o', 'grey', 'none', 'grey', '#151515')
 
-let NERDTreeIgnore = [ '\.swp' ]
+let NERDTreeIgnore = [ '\.swp', '__pycache__' ]
 
 
+" Vimwiki
+" Markdown syntax
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                       \ 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_global_ext = 0
 
-" Vimwiki diary template
-au BufNewFile ~/vimwiki/diary/*.wiki :silent 0r !~/.vim/bin/generate-vimwiki-diary-template '%'
+" Diary template
+au BufNewFile ~/vimwiki/diary/*.md :silent 0r !~/.vim/bin/generate-vimwiki-diary-template.sh '%'

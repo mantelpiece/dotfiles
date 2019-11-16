@@ -1,5 +1,4 @@
 """"""""""""""""""""""""""""EDITOR SETTINGS""""""""""""""""""""""""""""
-scriptencoding utf8
 set encoding=utf8
 
 syntax enable
@@ -36,7 +35,8 @@ set expandtab
 set smartindent
 
 set number
-" set cursorline
+set cursorline
+set signcolumn=yes
 
 " Maybe use base16 doodads?
 if filereadable(expand("~/.vimrc_background"))

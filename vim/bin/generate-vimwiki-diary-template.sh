@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
 cat <<EOF
-= $(date +"%Y-%m-%d")
+# $(date +"%Y-%m-%d %a") -
 
-== Todo ==
+## Todo
 * [ ]
 
 
-== Completed ==
+## Completed
 
 
-== In progress ==
+## In progress
 
 
-== Notes ==
+## Notes
 
 EOF

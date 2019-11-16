@@ -1,3 +1,5 @@
+scriptencoding utf8
+
 " Backspace
 set backspace=indent,eol,start
 
@@ -22,9 +24,9 @@ set mouse=a
 
 
 " Search
-set grepprg=ack " use ack for grep
-set incsearch
-set magic " use magic with regexs
+" set grepprg=ack " use ack for grep
+" set incsearch
+" set magic " use magic with regexs
 set noshowmatch " do not show matching braces
 
 " Window
