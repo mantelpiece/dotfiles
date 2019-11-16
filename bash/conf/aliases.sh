@@ -31,11 +31,20 @@ fi
 if hash docker-compose; then
   alias dcr='docker-compose run --rm'
   alias dcb='docker-compose build'
+  alias dcu='docker-compose up'
+  alias dcd='docker-compose down'
 
   dcrf() {
     docker-compose -f "$1" run --rm "${@:2}"
   }
 
+  dcru() {
+    docker-compose -f "$1" up --rm "${@:2}"
+  }
+
+  dcrd() {
+    docker-compose -f "$1" down "${@:2}"
+  }
 fi
 
 if hash conda; then
