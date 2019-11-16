@@ -1,0 +1,26 @@
+[core]
+    excludesfile = ~/.gitignore_global
+[user]
+    name = Brendan Studds
+    email = brendan.studds@gmail.com
+[commit]
+    template = /Users/brendan.studds/.stCommitMsg
+[color]
+    ui = true
+[color "status"]
+   branch = red
+   added = green
+   changed = blue
+   untracked = magenta
+
+[alias]
+    lgg = log  -n10 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s <%ai> %C(bold blue)<%an>%Creset' --abbrev-commit --date=iso
+    lggy = log -n10         --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s <%ai> %C(bold blue)<%an>%Creset' --abbrev-commit --date=iso
+    staged = diff --cached
+
+    st = status
+    cb = checkout -b
+    co = checkout
+    ap = add -p
+    cc = commit
+    cm = commit -m

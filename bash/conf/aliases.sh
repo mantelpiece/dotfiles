@@ -51,13 +51,6 @@ if hash conda; then
   alias cona='conda activate'
 fi
 
-if hash git; then
-  alias gst='git status'
-  alias gcb='git checkout -b'
-  alias gco='git checkout'
-  alias gcm='git commit -m'
-fi
-
 if hash tmuxinator; then
   alias ts='tmuxinator start'
 fi
