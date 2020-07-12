@@ -3,7 +3,7 @@
 defaultDir="$HOME/.config/base16-shell"
 base16ShellDir="${base16ShellDir:-$defaultDir}"
 
-[ -d "$base16ShellDir" ] || { echo "Base16 shell not installed"; exit; }
+[ -d "$base16ShellDir" ] || { echo "Base16 shell not installed"; return; }
 
 
 # Load Base16 terminal helper doodad

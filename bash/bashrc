@@ -14,7 +14,6 @@ bashDotfileRoot="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 . "$bashDotfileRoot/conf/prompt.sh"
 
 . "$bashDotfileRoot/conf/base16-shell.sh"
-. "$bashDotfileRoot/conf/python.sh"
 
 
 # Configure nvm

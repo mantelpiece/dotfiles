@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 
-alias ll='/usr/local/bin/gls -alF --color=auto --group-directories-first'
-alias la='/usr/local/bin/gls -A --color=auto --group-directories-first'
+if [[ -x /usr/local/bin/gls ]]; then
+  ls=/usr/local/bin/gls
+else
+  ls="ls"
+fi
 
-alias ls='/usr/local/bin/gls -h --color=auto --group-directories-first'
+alias ll=$ls' -alF --color=auto --group-directories-first'
+alias la=$ls' -A --color=auto --group-directories-first'
+
+alias ls=$ls' -h --color=auto --group-directories-first'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 
@@ -21,14 +27,14 @@ if [ -n "$(command -v pacman)" ]; then
   alias pacman="pacman --color always"
 fi
 
-if hash docker; then
+if hash docker 2>/dev/null; then
   dcall() {
     docker rm $(docker ps -a -q)
     docker rmi $(docker images -q)
   }
 fi
 
-if hash docker-compose; then
+if hash docker-compose 2>/dev/null; then
   alias dcr='docker-compose run --rm'
   alias dcb='docker-compose build'
   alias dcu='docker-compose up'
@@ -47,10 +53,10 @@ if hash docker-compose; then
   }
 fi
 
-if hash conda; then
+if hash conda 2>/dev/null; then
   alias cona='conda activate'
 fi
 
-if hash tmuxinator; then
+if hash tmuxinator 2>/dev/null; then
   alias ts='tmuxinator start'
 fi
