@@ -20,7 +20,7 @@ function __conda_env () {
 function ___last_exit () {
   #shellcheck disable=SC2181
   if [[ "$1" == "0" ]]; then
-    happy=$'\U0001F929'
+    happy=$'\U0001F92F'
     echo -e "$happy "
     # echo -e "$greenFg"':)'
   else

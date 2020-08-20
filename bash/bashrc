@@ -9,6 +9,10 @@ bashDotfileRoot="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 # Load configs
 . "$bashDotfileRoot/conf/shell-options.sh"
 . "$bashDotfileRoot/conf/env.sh"
+. "$bashDotfileRoot/conf/autoconfed.sh"
+
+. "$bashDotfileRoot/conf/base16-shell.sh"
+
 . "$bashDotfileRoot/conf/aliases.sh"
 . "$bashDotfileRoot/conf/completion.sh"
 . "$bashDotfileRoot/conf/prompt.sh"
@@ -16,7 +20,6 @@ bashDotfileRoot="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 . "$bashDotfileRoot/conf/base16-shell.sh"
 
 
-# Configure nvm
 . "$bashDotfileRoot/scripts/nvm.conf.sh"
 
 . "$bashDotfileRoot/scripts/running.sh"

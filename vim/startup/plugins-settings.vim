@@ -4,6 +4,8 @@ let g:ale_linters={
     \ }
 
 
+
+
 " Fugitive
 " Review staged hunks
 command! Greview :Git! diff --staged
@@ -12,6 +14,11 @@ command! Greview :Git! diff --staged
 let g:lightline = {
     \ 'colorscheme': 'wombat'
     \ }
+
+
+" NERDCommenter
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'left'
 
 
 " NERD tree configuration
@@ -44,7 +51,7 @@ au VimEnter * call NERDTreeHighlightFile('test*.py', 'darkyellow', 'none', 'yell
 " Generated
 au VimEnter * call NERDTreeHighlightFile('o', 'grey', 'none', 'grey', '#151515')
 
-let NERDTreeIgnore = [ '\.swp', '__pycache__' ]
+let NERDTreeIgnore = [ '\.swp', '__pycache__', 'node_modules' ]
 
 
 " Vimwiki

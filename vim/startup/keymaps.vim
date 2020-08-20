@@ -22,10 +22,28 @@ noremap <silent> <Leader>fc :NERDTreeFind<CR>
 " noremap <silent> <Leader>ff :CtrlP<CR>
 noremap <silent> <Leader>ft :TagbarToggle<CR>
 
+" Clipboard
+noremap <silent> <Leader>xc "+y
+noremap <silent> <Leader>xp "+p
+noremap <silent> <Leader>xP "+P
+
 
 " Errors
 noremap <silent> <Leader>en :cnext<CR>
 noremap <silent> <Leader>ep :cprev<CR>
+
+noremap <silent> <leader>ln :ALENext<cr>
+noremap <silent> <leader>lp :ALEPrevious<cr>
+
+
+" Syntax viewing
+nmap <leader>sp :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 
 
 " Git

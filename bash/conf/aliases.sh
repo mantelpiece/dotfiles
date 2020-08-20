@@ -31,6 +31,7 @@ if hash docker 2>/dev/null; then
   dcall() {
     docker rm $(docker ps -a -q)
     docker rmi $(docker images -q)
+    docker network prune
   }
 fi
 
