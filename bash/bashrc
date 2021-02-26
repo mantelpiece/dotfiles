@@ -5,21 +5,24 @@
 [[ "$-" != *i* ]] && return
 
 bashDotfileRoot="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+echo "source dir $bashDotfileRoot"
+
+# umask 027
 
 # Load configs
-. "$bashDotfileRoot/conf/shell-options.sh"
-. "$bashDotfileRoot/conf/env.sh"
-. "$bashDotfileRoot/conf/autoconfed.sh"
+. "$HOME/.dotfiles/bash/conf/shell-options.sh"
+. "$HOME/.dotfiles/bash/conf/env.sh"
+. "$HOME/.dotfiles/bash/conf/autoconfed.sh"
 
-. "$bashDotfileRoot/conf/base16-shell.sh"
+. "$HOME/.dotfiles/bash/conf/base16-shell.sh"
 
-. "$bashDotfileRoot/conf/aliases.sh"
-. "$bashDotfileRoot/conf/completion.sh"
-. "$bashDotfileRoot/conf/prompt.sh"
+. "$HOME/.dotfiles/bash/conf/aliases.sh"
+. "$HOME/.dotfiles/bash/conf/completion.sh"
+. "$HOME/.dotfiles/bash/conf/prompt.sh"
 
-. "$bashDotfileRoot/conf/base16-shell.sh"
+. "$HOME/.dotfiles/bash/conf/base16-shell.sh"
 
 
-. "$bashDotfileRoot/scripts/nvm.conf.sh"
+. "$HOME/.dotfiles/bash/scripts/nvm.conf.sh"
 
-. "$bashDotfileRoot/scripts/running.sh"
+. "$HOME/.dotfiles/bash/scripts/running.sh"
