@@ -10,13 +10,6 @@ die () { errr "${1:-""}" >&2; exit "${2:-1}"; }
 usage () { die "usage: $0 -e OS [-o OPTIONS]"; }
 
 
-tmpDir=$(mktemp -d 2>/dev/null || mktemp -d -t 'tmp')
-[[ -d $tmpDir ]] || { die "Failed to create temp dir"; }
-trap 'echo "YOU HAVE TRIGGERED MY TRAP CARD"; rm -rf $tmpDir' EXIT ERR
-
-touch $tmpDir/hello
-[[ -f $tmpDir/hello ]] || { die "wh?"; }
-
 scriptDir="$(realpath "$(dirname "$0")")"
 
 env=
@@ -32,6 +25,12 @@ done
 
 [[ -n "$env" ]] || { usage; }
 
+
+tmpDir=$(mktemp -d 2>/dev/null || mktemp -d -t 'tmp')
+[[ -d $tmpDir ]] || { die "Failed to create temp dir"; }
+trap 'rm -rf $tmpDir' EXIT ERR
+
+
 echo "Installing for OS $env with options $options";
 
 
@@ -39,6 +38,7 @@ base16ShellTheme="base16_tomorrow-night-eighties"
 
 
 autoconf () {
+  touch $HOME/.dotfiles/bash/conf/autoconfed.sh
   if ! grep -o "'$2'" $HOME/.dotfiles/bash/conf/autoconfed.sh; then
     echo -e "\n# $1\n$2\n" >> $HOME/.dotfiles/bash/conf/autoconfed.sh
   fi
@@ -65,13 +65,16 @@ fi
 
 
 
-coreDeps="ack bash colordiff curl docker git jq nvm python3 tmux tmuxinator tree vim xsv"
+coreDeps="ack bash colordiff curl docker git jq python3 tmux tmuxinator tree vim"
+nonCoreDeps="nvm xsv"
 if [[ $env = "ubuntu" ]]; then
   coreDeps="$coreDeps python-is-python3"
 fi
 good "\n\n#### Installing core deps"
 info "  deps: $coreDeps"
-$install $coreDeps
+if ! $install $coreDeps; then
+  errr "Core install failed"
+fi
 
 
 # Install dotfiles

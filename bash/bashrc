@@ -4,8 +4,6 @@
 # If not running interactively, don't do anything
 [[ "$-" != *i* ]] && return
 
-bashDotfileRoot="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-echo "source dir $bashDotfileRoot"
 
 # Load configs
 . "$HOME/.dotfiles/bash/conf/shell-options.sh"
