@@ -1,2 +1,5 @@
-vim/plugged/
+bash/conf/autoconfed.sh
+
+vim/black/
 vim/ftplugin/plug.vim
+vim/plugged/
