@@ -86,6 +86,17 @@ good "\n\n#### Linking dotfiles"
     }
 )
 
+# Install mac "fixes"
+if [[ $env = "macos" ]]; then
+  echo -e "\n\nInstalling mac fixes"
+  deps="bash-completion@2 coreutils gnu-sed"
+  $install $deps
+
+  autoconf "GNU core utils to path" 'export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"'
+  autoconf "GNU core utils man pages" 'export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"'
+  autoconf "Autcompletion for bash" '[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"'
+fi
+
 
 # Install and configure base16-shell
 if [[ ! -d $HOME/.config/base16-shell ]]; then
