@@ -19,7 +19,7 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
 
-function cdiff() {
+function cdiff () {
   colordiff -w -W 165 "$@" | less -R;
 }
 
@@ -28,7 +28,7 @@ if [ -n "$(command -v pacman)" ]; then
 fi
 
 if hash docker 2>/dev/null; then
-  dcall() {
+  dcall () {
     docker rm $(docker ps -a -q)
     docker rmi $(docker images -q)
     docker network prune
@@ -41,15 +41,19 @@ if hash docker-compose 2>/dev/null; then
   alias dcu='docker-compose up'
   alias dcd='docker-compose down'
 
-  dcrf() {
+  dcrf () {
     docker-compose -f "$1" run --rm "${@:2}"
   }
 
-  dcru() {
-    docker-compose -f "$1" up --rm "${@:2}"
+  dcuf () {
+    if (( $# == 1)); then
+      docker-compose -f "$1" up --rm
+    else
+      docker-compose -f "$1" up --rm "${@:2}"
+    fi
   }
 
-  dcrd() {
+  dcdf () {
     docker-compose -f "$1" down "${@:2}"
   }
 fi

@@ -7,8 +7,6 @@
 bashDotfileRoot="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 echo "source dir $bashDotfileRoot"
 
-# umask 027
-
 # Load configs
 . "$HOME/.dotfiles/bash/conf/shell-options.sh"
 . "$HOME/.dotfiles/bash/conf/env.sh"
@@ -26,3 +24,7 @@ echo "source dir $bashDotfileRoot"
 . "$HOME/.dotfiles/bash/scripts/nvm.conf.sh"
 
 . "$HOME/.dotfiles/bash/scripts/running.sh"
+
+
+# Load environment specific config
+[[ -r "$HOME/.bashrc.local" ]] && . "$HOME/.bashrc.local";
