@@ -23,6 +23,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
 Plug 'vimwiki/vimwiki'
+Plug 'powerman/vim-plugin-AnsiEsc'
 
 Plug 'mgedmin/coverage-highlight.vim'
 

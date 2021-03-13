@@ -3,6 +3,10 @@ let g:ale_linters={
     \ 'python': ['pylint'],
     \ }
 
+let g:ale_pattern_options = {
+    \ '\.cfn\.yml$': { 'ale_linters': ['cfn-lint'], 'ale_fixers': [] }
+    \ }
+
 
 
 

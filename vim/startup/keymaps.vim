@@ -19,8 +19,12 @@ noremap <Leader>vr :source ~/.vimrc<CR>:PlugInstall<CR>:bd<CR>:exe ":echo 'vimrc
 " Files and file navigation
 noremap <silent> <Leader>ff :NERDTreeToggle <CR>
 noremap <silent> <Leader>fc :NERDTreeFind<CR>
-" noremap <silent> <Leader>ff :CtrlP<CR>
-noremap <silent> <Leader>ft :TagbarToggle<CR>
+noremap <silent> <Leader>fz :FZF<CR>
+" noremap <silent> <Leader>ft :TagbarToggle<CR>
+
+" Buffers
+noremap <Leader>b :buffers<CR>:buffer<Space>
+
 
 " Clipboard
 noremap <silent> <Leader>xc "+y
@@ -56,3 +60,8 @@ noremap <leader>sn ]s
 noremap <leader>sp [s
 noremap <leader>sa zg
 noremap <leader>s? z=
+
+
+" Vimwiki
+noremap <silent> C-<cr> :VimwikiVSplitLink 1 1<cr>
+noremap <silent> S-<cr> :VimwikiSplitLink 1 1<cr>
