@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# set -euo pipefail
 
 good () { echo -e "\e[32m$*\e[0m"; }
 info () { echo -e "\e[34m$*\e[0m"; }
@@ -28,7 +27,7 @@ done
 
 tmpDir=$(mktemp -d 2>/dev/null || mktemp -d -t 'tmp')
 [[ -d $tmpDir ]] || { die "Failed to create temp dir"; }
-trap 'rm -rf $tmpDir' EXIT ERR
+trap 'rm -rf $tmpDir' EXIT
 
 
 echo "Installing for OS $env with options $options";
@@ -165,25 +164,32 @@ if [[ $options =~ "python" ]]; then
     fi
 
     echo "... downloading conda"
-    # touch $tmpDir/miniconda.sh
-    # vim $tmpDir/miniconda.sh
-    # exit 
-    # curl -sSL $binary -o $tmpDir/miniconda.sh
-    # [[ -f $tmpDir/miniconda.sh ]] || { die "what"; }
-
-    if ! curl -sSL $binary -o $tmpDir/miniconda.sh; then
+    if ! curl -o "$tmpDir/miniconda.sh" -sSL "$binary"; then
       errr "... failed to download miniconda installer";
     else
       echo "... installing conda"
       if ! bash $tmpDir/miniconda.sh -b -p $HOME/.miniconda; then
         errr "Failed to install miniconda"
       fi
-      # autoconf "Add conda to environment" ''
+      condaAutoConf=$(echo "\
+__conda_setup=\"\$('$HOME/.miniconda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)\"
+if [ \$? -eq 0 ]; then
+    eval \"\$__conda_setup\"
+else
+    if [ -f \"$HOME/.miniconda/etc/profile.d/conda.sh\" ]; then
+        . \"$HOME/.miniconda/etc/profile.d/conda.sh\"
+    else
+        export PATH=\"$HOME/.miniconda/bin:\$PATH\"
+    fi
+fi
+unset __conda_setup")
+      autoconf "Add conda to path" "$condaAutoConf"
     fi
   fi
-
+fi
 
   # Install poetry
+if [[ $options =~ "poetry" ]]; then
   if ! hash poetry 2>/dev/null; then
     if ! curl \
         -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py \
