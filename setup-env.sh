@@ -37,10 +37,18 @@ base16ShellTheme="base16_tomorrow-night-eighties"
 
 
 autoconf () {
-  touch $HOME/.dotfiles/bash/conf/autoconfed.sh
-  if ! grep -o "'$2'" $HOME/.dotfiles/bash/conf/autoconfed.sh; then
-    echo -e "\n# $1\n$2\n" >> $HOME/.dotfiles/bash/conf/autoconfed.sh
+  touch "$HOME/.dotfiles/bash/conf/autoconfed.sh"
+  if ! grep -o "'$2'" "$HOME/.dotfiles/bash/conf/autoconfed.sh"; then
+    echo -e "\n# $1\n$2\n" >> "$HOME/.dotfiles/bash/conf/autoconfed.sh"
   fi
+}
+
+linkIfNotExists () {
+    local target="$1"
+    local linkName="$2"
+    [[ -r "$linkName" ]] && return;
+
+    ln -s "$target" "$linkName"
 }
 
 if [[ $env = "macos" ]]; then
@@ -65,7 +73,7 @@ fi
 
 
 coreDeps="ack bash colordiff curl docker git jq python3 tmux tmuxinator tree vim"
-nonCoreDeps="nvm xsv"
+# nonCoreDeps="nvm xsv"
 if [[ $env = "ubuntu" ]]; then
   coreDeps="$coreDeps python-is-python3"
 fi
@@ -79,13 +87,11 @@ fi
 # Install dotfiles
 good "\n\n#### Linking dotfiles"
 (
-  cd $HOME &&
-    {
-      rm -f ~/.bashrc && ln -s "$scriptDir/bash/bashrc" ~/.bashrc;
-      ln -s "$scriptDir/tmux.conf" ~/.tmux.conf;
-      ln -s "$scriptDir/vim" ~/.vim;
-      ln -s "$scriptDir/vimrc" ~/.vimrc;
-    }
+  cd "$HOME" || die "Failed to cd into \$HOME"
+  rm -f ~/.bashrc && ln -s "$scriptDir/bash/bashrc" "$HOME/.bashrc";
+  linkIfNotExists "$scriptDir/tmux.conf" "$HOME/.tmux.conf";
+  linkIfNotExists "$scriptDir/vim" "$HOME/.vim";
+  linkIfNotExists "$scriptDir/vimrc" "$HOME/.vimrc";
 )
 
 # Install mac "fixes"
@@ -94,7 +100,9 @@ if [[ $env = "macos" ]]; then
   deps="bash-completion@2 coreutils gnu-sed"
   $install $deps
 
+  # shellcheck disable=SC2016
   autoconf "GNU core utils to path" 'export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"'
+  # shellcheck disable=SC2016
   autoconf "GNU core utils man pages" 'export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"'
   autoconf "Autcompletion for bash" '[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"'
 fi
@@ -103,8 +111,8 @@ fi
 # Install and configure base16-shell
 if [[ ! -d $HOME/.config/base16-shell ]]; then
   good -e "\n\n\n#### Installing base16 shell colorschemes"
-  git clone https://github.com/chriskempson/base16-shell.git $HOME/.config/base16-shell
-  eval "$($HOME/.config/base16-shell/profile_helper.sh)"
+  git clone https://github.com/chriskempson/base16-shell.git "$HOME/.config/base16-shell"
+  eval "$("$HOME/.config/base16-shell/profile_helper.sh")"
 
   $base16ShellTheme
 fi
@@ -168,9 +176,10 @@ if [[ $options =~ "python" ]]; then
       errr "... failed to download miniconda installer";
     else
       echo "... installing conda"
-      if ! bash $tmpDir/miniconda.sh -b -p $HOME/.miniconda; then
+      if ! bash "$tmpDir/miniconda.sh" -b -p "$HOME/.miniconda"; then
         errr "Failed to install miniconda"
       fi
+      # shellcheck disable=SC2116
       condaAutoConf=$(echo "\
 __conda_setup=\"\$('$HOME/.miniconda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)\"
 if [ \$? -eq 0 ]; then
@@ -193,13 +202,14 @@ if [[ $options =~ "poetry" ]]; then
   if ! hash poetry 2>/dev/null; then
     if ! curl \
         -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py \
-        -o $tmpDir/poetry.sh; then
+        -o "$tmpDir/poetry.sh"; then
       errr "... failed to download poetry"
     else
       echo "... installing poetry"
-      if ! $tmpDir/poetry.sh; then
+      if ! "$tmpDir/poetry.sh"; then
         errr "... failed to install poetry"
       else
+        # shellcheck disable=SC2016
         autoconf "Add poetry to PATH" 'export PATH="~/.poetry/bin:$PATH"'
         poetry completions bash > ~/.config/ /poetry.bash-completion
       fi
