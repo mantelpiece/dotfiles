@@ -21,6 +21,7 @@ Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
+Plug 'hashivim/vim-terraform'
 Plug 'vimwiki/vimwiki'
 Plug 'powerman/vim-plugin-AnsiEsc'
 

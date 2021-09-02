@@ -21,7 +21,6 @@ elseif s:uname =~ "microsoft"
     let &t_EI = "\<Esc>[2 q"
 end
 
-
 set tabstop=4
 set shiftwidth=0 " Use the value of tabstop for shiftwidth
 set softtabstop=0
