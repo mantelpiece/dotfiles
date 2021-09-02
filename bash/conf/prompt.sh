@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+_date="date"
+hash gdate 2>/dev/null && _date="gdate"
+
 function ___aws_env () {
   if [[ -n "$__AWS_AUTHED_ENV" ]]; then
     echo -e "[$__AWS_AUTHED_ENV] "
@@ -47,6 +50,18 @@ function ___git_info () {
   fi
 }
 
+# Used to add execution timing to prompt, shamelessly stolen from
+# https://tylercipriani.com/blog/2016/01/19/Command-Timing-Bash-Prompt/
+function debug () {
+    # do nothing if completing (running command completion)
+    [[ -n "$COMP_LINE" ]] && return
+
+    # dont cause a preexec for $PROMPT_COMMAND
+    [[ "$BASH_COMMAND" = "$PROMPT_COMMAND" ]] && return
+
+    startTime=$($_date +'%s')
+}
+
 # shellcheck disable=2155
 function __prompt_command () {
   local exit="$?"
@@ -75,14 +90,20 @@ function __prompt_command () {
   # local clrBg="\[$(tput sgr0)\]"
   local clr='\[\e[0m\]'
 
+  endTime=$($_date +'%s')
+  elapsedTime=$(( endTime - startTime ))
+  timeTaken=
+  [[ $elapsedTime -ge 5 ]] && timeTaken=" $($_date -d'@'$(( endTime - startTime)) -u +'%T') "
+
   gitInfo=$(___git_info)
   if [[ -n "$gitInfo" ]]; then
     PS1+="$clr$greenBg $gitInfo $greenFg$blueBg$sep"
   fi
   PS1+="$clr$blueBg \W $blueFg$greyBg$sep"
-  PS1+="$clr$greyBg $(___last_exit $exit) $clr$greyFg$sep"
+  PS1+="$clr$greyBg $(___last_exit $exit)$timeTaken$clr$greyFg$sep"
   PS1+="$clr\n"
   PS1+="$(___aws_env)$(__conda_env)"
   PS1+="> "
 }
+trap 'debug' DEBUG
 PROMPT_COMMAND=__prompt_command
