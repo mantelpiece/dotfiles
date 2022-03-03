@@ -153,6 +153,13 @@ if [[ $options =~ "myob" ]]; then
     autoconf "Autocompletion for aws cli" "complete -C /usr/local/bin/aws_completer aws"
 fi
 
+if [[ $options =~ "node" ]]; then
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+    autoconf "Hook for nvm" '+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion'
+fi
+
 
 if [[ $options =~ "python" ]]; then
     good "\n\n#### Installing python options"
