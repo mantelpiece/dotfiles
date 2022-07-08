@@ -10,7 +10,7 @@ let mapleader=","
 " another char if there is a mapping with <Esc>
 inoremap <C-c> <Esc><Esc>
 
-noremap <silent> <Leader>c :b#\|bd#<CR>
+noremap <silent> <Leader>c :bd<CR>
 noremap <silent> <Leader>q :xall<CR>
 noremap <Leader>ve :e ~/.vimrc<CR>
 noremap <Leader>vr :source ~/.vimrc<CR>:PlugInstall<CR>:bd<CR>:exe ":echo 'vimrc reloaded'"<CR>"
@@ -19,7 +19,8 @@ noremap <Leader>vr :source ~/.vimrc<CR>:PlugInstall<CR>:bd<CR>:exe ":echo 'vimrc
 " Files and file navigation
 noremap <silent> <Leader>ff :NERDTreeToggle <CR>
 noremap <silent> <Leader>fc :NERDTreeFind<CR>
-noremap <silent> <Leader>fz :FZF<CR>
+"noremap <silent> <Leader>fz :FZF<CR>
+noremap <silent> <Leader>fz :Files<CR>
 " noremap <silent> <Leader>ft :TagbarToggle<CR>
 
 " Buffers

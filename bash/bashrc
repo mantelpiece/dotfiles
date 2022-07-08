@@ -26,4 +26,3 @@
 
 # Load environment specific config
 [[ -r "$HOME/.bashrc.local" ]] && . "$HOME/.bashrc.local";
-

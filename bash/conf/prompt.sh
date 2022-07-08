@@ -36,7 +36,8 @@ function ___last_exit () {
 function ___git_info () {
   export GIT_PS1_SHOWDIRTYSTATE=true # '*' for unstaged and '+' for staged changes
   export GIT_PS1_SHOWSTASHSTATE=true # '$' indicates non-empty stash
-  export GIT_PS1_SHOWUPSTREAM="verbose git"
+  # export GIT_PS1_SHOWUPSTREAM="verbose git"
+  export GIT_PS1_SHOWUPSTREAM=
 
   local gitInfo
   gitInfo=$(__git_ps1)
