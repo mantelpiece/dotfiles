@@ -52,7 +52,6 @@ enddef
 def PytestFile()
     var results = ExecutePytest(expand('%'))
     ShowOutput(results)
-    GreenBar()
 enddef
 
 def PytestLinkedTestModule()
@@ -69,7 +68,6 @@ def PytestLinkedTestModule()
 
     var results = ExecutePytest(testFile)
     ShowOutput(results)
-    GreenBar()
 enddef
 
 
@@ -80,19 +78,21 @@ enddef
 
 
 def ShowOutput(output: list<string>)
+    # Store current buffer so when can switch back to it
     g:pytestRunCurWinnr = bufwinnr("%")
     augroup PytestRun
         autocmd!
-        autocmd BufLeave *.pytest execute $":{g:pytestRunCurWinnr} wincmd w"
         autocmd BufEnter *.pytest call InitKeymaps()
+        autocmd BufLeave *.pytest execute $":{g:pytestRunCurWinnr} wincmd w"
     augroup END
 
     var winnr = bufwinnr("Output.pytest")
-    #silent! execute winnr < 0 ? "botright new Output.pytest" : $"{winnr} wincmd w"
-    execute "bot :10new Output.pytest"
+    silent! execute winnr < 0 ? "bot :10new Output.pytest" : $":{winnr} wincmd w"
+    # execute "bot :10new Output.pytest"
     setlocal buftype=nowrite bufhidden=delete nobuflisted noswapfile nowrap nonumber #filtype=pytest
 
     var cleanLines = output->map((_, val) => trim(val))
+    execute "normal ggdG"
     append(0, cleanLines)
     execute "normal dd"
     PytestSyntax()
