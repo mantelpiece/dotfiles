@@ -91,9 +91,9 @@ def ShowOutput(output: list<string>)
     # execute "bot :10new Output.pytest"
     setlocal buftype=nowrite bufhidden=delete nobuflisted noswapfile nowrap nonumber #filtype=pytest
 
-    var cleanLines = output->map((_, val) => trim(val))
+    # var cleanLines = output->map((_, val) => trim(val))
     execute "normal ggdG"
-    append(0, cleanLines)
+    append(0, output)
     execute "normal dd"
     PytestSyntax()
 enddef

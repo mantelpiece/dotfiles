@@ -42,7 +42,7 @@ noremap <silent> <leader>lp :ALEPrevious<cr>
 
 
 " Syntax viewing
-nmap <leader>sp :call <SID>SynStack()<CR>
+nmap <leader>st :call <SID>SynStack()<CR>
 function! <SID>SynStack()
   if !exists("*synstack")
     return
