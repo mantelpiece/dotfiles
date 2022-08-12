@@ -136,6 +136,8 @@ def UnittestSyntax()
 
     hi def link TestSuccess     Success
     hi def link TestFailure     Failure
+    hi def link Expected        Success
+    hi def link Received        Failure
 
     syn clear
     syntax include @Typescript syntax/typescript.vim
@@ -159,6 +161,8 @@ def UnittestSyntax()
     syn match Failure           '\v\s(\>)\s' contained containedin=CodeSnippet
     syn match Failure           '\v(\^)' contained containedin=RTypescript
     syn match FailureFooter     '\v^\s+(at .*)$' contains=FileName
+    syn match Expected          '\v^\s+(-.*)'
+    syn match Received          '\v^\s+(\+.*)'
 
     syn match Success           '\v(\d{1,} passed)'
     syn match Failure           '\v(\d{1,} failed)'

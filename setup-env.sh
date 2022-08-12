@@ -72,7 +72,7 @@ fi
 
 
 
-coreDeps="ack bash colordiff curl docker git jq python3 tmux tmuxinator tree vim"
+coreDeps="ack bash colordiff curl docker git jq python3 tmux tmuxinator tree vim fzf fd"
 # nonCoreDeps="nvm xsv"
 if [[ $env = "ubuntu" ]]; then
     coreDeps="$coreDeps python-is-python3"

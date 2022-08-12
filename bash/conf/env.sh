@@ -6,4 +6,4 @@ export PATH="~/opt/bin:$PATH"
 
 
 export EDITOR=vim
-
+hash fzf && hash fd && export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
