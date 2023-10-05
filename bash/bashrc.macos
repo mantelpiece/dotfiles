@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1090
+
+# MacOS specific doodads
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+alias brewski="brew update --verbose; brew upgrade --verbose; brew upgrade --cask"
+export HOMEBREW_NO_INSTALL_CLEANUP="HOMEBREW_NO_INSTALL_CLEANUP"
+
+# Redshift
+export DROPLET_PROD="droplet-prod-redshift-redshiftcluster-vs1lmt1p8ine.chlsn72tx4rc.ap-southeast-2.redshift.amazonaws.com"
+export SEGMENT_PROD="segment-redshift-segmentredshiftcluster-3l8qrbc516du.cuww7kaoqvr7.ap-southeast-2.redshift.amazonaws.com"
+
+# MYOB helpers
+# source ~/projects/droplet-siren/auth.sh
+source /Users/brendan.studds/tooling/tranquility-tools/shell/auth-tool.sh
+
+export vim=/usr/local/bin/vim
+export GYOB='git@github.com:MYOB-Technology'
+
+if hash podman 2>/dev/null; then
+    # Wrap podman as docker, with check for compose which routes to docker-compose instead
+    binDir="/usr/local/bin"
+    # podmanCompose="/Users/brendan.studds/.local/share/containers/podman-desktop/extensions-storage/podman-desktop.compose/bin/compose"
+    podmanCompose="podman-compose"
+
+    # shellcheck disable=SC2016
+    echo '[[ $1 == "compose" ]] && '"$podmanCompose"' "${@:2}"
+[[ $1 != "compose" ]] && podman "$@"' > $binDir/docker
+    chmod 750 $binDir/docker
+
+    echo 'podman-compose "$@"' > $binDir/docker-compose
+    chmod 750 $binDir/docker-compose
+
+    # `docker-compose` may use the wrong socket, link the podman socket to the socket docker-compose is using
+    # ln -s /Users/brendan.studds/.local/share/containers/podman/machine/qemu/podman.sock /Users/brendan.studds/.docker/run/docker.sock
+fi
