@@ -1,7 +1,11 @@
-" ALE linters
-let g:ale_linters={
-    \ 'python': ['pylint'],
-    \ }
+" ALE
+let g:ale_fix_on_save = 1
+
+let g:ale_fixers = {}
+let g:ale_fixers.python = ['black']
+
+let g:ale_linters = {}
+let g:ale_linters.python = ['pylint']
 
 let g:ale_pattern_options = {
     \ '\.cfn\.yml$': { 'ale_linters': ['cfn-lint'], 'ale_fixers': [] }
@@ -18,6 +22,10 @@ command! Greview :Git! diff --staged
 let g:lightline = {
     \ 'colorscheme': 'wombat'
     \ }
+
+
+" indentLine
+let g:indentLine_char = '⦙'
 
 
 " NERDCommenter

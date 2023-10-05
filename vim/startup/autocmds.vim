@@ -13,5 +13,5 @@ autocmd BufReadPost Dockerfile* set ft=Dockerfile
 autocmd FileType python,javascript,json autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 autocmd FileType typescript setlocal tabstop=4 expandtab shiftwidth=4 softtabstop=4
-autocmd FileType yaml setlocal tabstop=4 expandtab shiftwidth=4 softtabstop=4
+autocmd FileType yaml setlocal tabstop=2 expandtab shiftwidth=2 softtabstop=2
 autocmd FileType terraform setlocal tabstop=4 expandtab shiftwidth=4 softtabstop=4
