@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 good () { echo -e "\e[32m$*\e[0m"; }
 info () { echo -e "\e[34m$*\e[0m"; }
 errr () { echo -e "\e[31m$*\e[0m"; }
@@ -30,40 +29,41 @@ tmpDir=$(mktemp -d 2>/dev/null || mktemp -d -t 'tmp')
 trap 'rm -rf $tmpDir' EXIT
 
 
+echo "$HOME"
 echo "Installing for OS $env with options $options";
 
 
-base16ShellTheme="base16_tomorrow-night-eighties"
-
-
 autoconf () {
-    touch "$HOME/.dotfiles/bash/conf/autoconfed.sh"
-    if ! grep -o "'$2'" "$HOME/.dotfiles/bash/conf/autoconfed.sh"; then
-        echo -e "\n# $1\n$2\n" >> "$HOME/.dotfiles/bash/conf/autoconfed.sh"
+    touch "$scriptDir/shell/bash/conf/autoconfed.sh"
+    if ! grep -o "*'$2'*" "$scriptDir/shell/bash/conf/autoconfed.sh"; then
+        echo -e "\n# $1\n$2\n" >> "$scriptDir/shell/bash/conf/autoconfed.sh"
     fi
 }
 
 linkIfNotExists () {
     local target="$1"
     local linkName="$2"
-    [[ -r "$linkName" ]] && return;
-
-    ln -s "$target" "$linkName"
+    if ! [[ -e "$linkName" ]]; then
+        ln -fs "$target" "$linkName"
+    fi
 }
 
 if [[ $env = "macos" ]]; then
     if ! hash brew 2>/dev/null; then
         echo -e "\n\nInstalling homebrew"
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        # shellcheck disable=SC2016
+        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/bstudds/.zprofile
+        eval "$(/opt/homebrew/bin/brew shellenv)"
     fi
 
-    install="brew install"
+    install="brew install -q"
 
     echo -e "\n\nInstalling mac fixes"
     deps="bash-completion@2 coreutils"
     $install $deps
 
-    autoconf "Autcompletion for bash" '[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"'
+    # autoconf "Autcompletion for bash" '[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"'
 
 elif [[ $env = "ubuntu" ]]; then
     echo "Unfortunately I need to sudo to install - sudo password will be requested during installation"
@@ -72,7 +72,7 @@ fi
 
 
 
-coreDeps="ack bash colordiff curl docker git jq python3 tmux tmuxinator tree vim fzf fd"
+coreDeps="ack bash colordiff curl docker git jq python3 tmux tmuxinator tree vim fzf fd shellcheck"
 # nonCoreDeps="nvm xsv"
 if [[ $env = "ubuntu" ]]; then
     coreDeps="$coreDeps python-is-python3"
@@ -88,23 +88,32 @@ fi
 good "\n\n#### Linking dotfiles"
 (
 cd "$HOME" || die "Failed to cd into \$HOME"
-rm -f ~/.bashrc && ln -s "$scriptDir/bash/bashrc" "$HOME/.bashrc";
+if [[ $options =~ "zsh" ]]; then
+    linkIfNotExists "$scriptDir/shell/zsh/zshrc" "$HOME/.zshrc"
+else
+    rm -f ~/.bashrc && ln -s "$scriptDir/shell/bash/bashrc" "$HOME/.bashrc";
+fi
 linkIfNotExists "$scriptDir/tmux.conf" "$HOME/.tmux.conf";
 linkIfNotExists "$scriptDir/vim" "$HOME/.vim";
 linkIfNotExists "$scriptDir/vimrc" "$HOME/.vimrc";
+linkIfNotExists "$scriptDir/git/gitconfig_seek" "$HOME/.gitconfig";
+linkIfNotExists "$scriptDir/git/gitignore_global" "$HOME/.gitignore_global";
 )
 
 # Install mac "fixes"
 if [[ $env = "macos" ]]; then
-    echo -e "\n\nInstalling mac fixes"
+    good "\n\nInstalling mac fixes"
     deps="bash-completion@2 coreutils gnu-sed"
     $install $deps
 
-  # shellcheck disable=SC2016
-  autoconf "GNU core utils to path" 'export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"'
-  # shellcheck disable=SC2016
-  autoconf "GNU core utils man pages" 'export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"'
-  autoconf "Autcompletion for bash" '[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"'
+    # shellcheck disable=SC2016
+    autoconf "GNU core utils to path" 'export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+'
+    # shellcheck disable=SC2016
+    autoconf "GNU core utils man pages" 'export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+'
+    autoconf "Autcompletion for bash" '[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+'
 fi
 
 
@@ -113,16 +122,23 @@ if [[ ! -d $HOME/.config/base16-shell ]]; then
     good -e "\n\n\n#### Installing base16 shell colorschemes"
     git clone https://github.com/chriskempson/base16-shell.git "$HOME/.config/base16-shell"
     eval "$("$HOME/.config/base16-shell/profile_helper.sh")"
+fi
 
-    $base16ShellTheme
+if [[ $options =~ "zsh" ]]; then
+    if ! hash omz; then
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    fi
+    
 fi
 
 
 # Install fonts
 good "\n\n#### Installing fonts"
 if [[ $env = "macos" ]]; then
-    brew tap homebrew/cask-fonts
-    brew cask install font-dejavu-sans-mono-for-powerline
+    fontPackage=font-dejavu-sans-mono-for-powerline
+    if ! brew list $fontPackage; then
+        brew install $fontPackage
+    fi
 else
     if [[ ! -r "$HOME/.local/share/fonts/Droid Sans Mono Dotted for Powerline.ttf" ]]; then
         if ! git clone git@github.com:powerline/fonts.git "$tmpDir/fonts" --depth 1; then
@@ -154,10 +170,13 @@ if [[ $options =~ "myob" ]]; then
 fi
 
 if [[ $options =~ "node" ]]; then
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-    autoconf "Hook for nvm" '+export NVM_DIR="$HOME/.nvm"
+    if ! hash nvm; then
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+        # shellcheck disable=SC2016
+        autoconf "Hook for nvm" '+export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion'
+    fi
 fi
 
 
@@ -187,7 +206,7 @@ if [[ $options =~ "python" ]]; then
                 errr "Failed to install miniconda"
             fi
             # shellcheck disable=SC2116
-            condaAutoConf=$(echo "\
+            condaAutoConf="$(echo "\
 __conda_setup=\"\$('$HOME/.miniconda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)\"
 if [ \$? -eq 0 ]; then
     eval \"\$__conda_setup\"
@@ -198,7 +217,7 @@ else
         export PATH=\"$HOME/.miniconda/bin:\$PATH\"
     fi
 fi
-unset __conda_setup")
+unset __conda_setup")"
             autoconf "Add conda to path" "$condaAutoConf"
         fi
     fi
@@ -224,6 +243,33 @@ if [[ $options =~ "poetry" ]]; then
                 poetry completions bash > ~/.config/ /poetry.bash-completion
             fi
         fi
+    fi
+fi
+
+if [[ $options =~ "aws" ]]; then
+    good "Installing AWS CLI"
+    if ! hash aws; then
+        if [[ $env == "macos" ]]; then
+            curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+            sudo installer -pkg AWSCLIV2.pkg -target /
+        else
+            errr "I don't know how to install AWS CLI for env $env."
+        fi
+    fi
+
+    autoconf "Enable AWS CLI completion" "autoload bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
+complete -C '/usr/local/bin/aws_completer' aws"
+fi
+
+if [[ $options =~ "jenv" ]]; then
+    if [[ $env == "macos" ]]; then
+        brew install jenv
+        # shellcheck disable=SC2016
+        autoconf "Configuring jEnv" 'export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"'
+    else
+        errr "I don't know how to install jenv on $env"
     fi
 fi
 

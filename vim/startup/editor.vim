@@ -39,13 +39,16 @@ set cursorline
 set signcolumn=yes
 
 " Maybe use base16 doodads?
-if filereadable(expand("~/.vimrc_background"))
+if exists('$BASE16_THEME')
+      \ && (!exists('g:colors_name') || g:colors_name != 'base16-$BASE16_THEME')
     let base16colorspace=256
-    source ~/.vimrc_background
+    colorscheme base16-$BASE16_THEME
 endif
 
 " Override highlight for matching parenthesis. 208 is an orange colour
-hi MatchParen ctermbg=bg ctermfg=208
+" hi MatchParen ctermbg=bg ctermfg=208 " Where did 'bg' come from?
+hi MatchParen ctermfg=208 " Where did 'bg' come from?
+
 
 " Highlight characters outside the 80col border
 "highlight rightMargin ctermbg=grey guibg=grey ctermfg=black guifg=black

@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1091
+
+
+# If not running interactively, don't do anything
+[[ "$-" != *i* ]] && return
+
+rootDir="$HOME/.dotfiles/shell"
+
+
+# Load configs
+. "$rootDir/bash/conf/shell-options.sh"
+. "$rootDir/bash/conf/prompt.sh"
+
+. "$rootDir/shared/env.sh"
+. "$rootDir/shared/autoconfed.sh"
+
+. "$rootDir/shared/base16-shell.sh"
+
+. "$rootDir/shared/aliases.sh"
+. "$rootDir/shared/completion.sh"
+
+
+
+. "$rootDir/bash/scripts/nvm.conf.sh"
+
+
+# Load environment specific config
+[[ -r "$HOME/.bashrc.local" ]] && . "$HOME/.bashrc.local";

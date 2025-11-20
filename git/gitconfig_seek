@@ -1,0 +1,34 @@
+[core]
+    excludesfile = /Users/brendan.studds/.gitignore_global
+[user]
+    name = Brendan Studds
+    email = bstudds@seek.com.au
+[color]
+    ui = true
+[color "status"]
+    branch = red
+    added = green
+    changed = blue
+    untracked = magenta
+[alias]
+    lgg = log  -n10 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s <%ai> %C(bold blue)<%an>%Creset' --abbrev-commit --date=iso
+    lggy = log -n10         --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s <%ai> %C(bold blue)<%an>%Creset' --abbrev-commit --date=iso
+    staged = diff --cached
+
+    st = status
+    cb = checkout -b
+    co = checkout
+    ap = add -p
+    cc = commit
+    cm = commit -m
+[gpg]
+    format = ssh
+[gpg "ssh"]
+    program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+    allowedSignersFile = ~/.config/git/allowed_signers
+[commit]
+    gpgsign = true
+[user]
+    signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCxdHIdDjVvINWJzFGChYq+KnsiH+h8u1KaC++ohdP2Ge02lsgLxMH6PxrwfrMFtU3jXNSFUg2JcashCK1jQ1t8WY95m7yOU4wE7vJ2VEwxBYpaG78N/FKqFVTDDG0K0TFVkH5NA0+B9QZBf/E79pC86CuvAhYV0IaRJUleHefOm8fLuXbBnZxGpJzQJiFq2nmI9+Et2Iv3n21v+UociZ1Rah/6fVMNfA0hHOdNcQFvU/6i4Qi3WMQgT065+XU0obSwLPnrU/axQ+D4OoZypiZsqTHX2QcpqapHjnOrjF8sI9Y+kGJZ+P1KTjLV6JbflYVLHW3poT9SddZlS+O6YHvSoNY4aHBECQD9+ba4ES1yBla2kfXBRLTSLUhuudR4GlGFoFxKN2J/+yFKTeLV+wEg3e0aSIuUn/UUY8Z0agZqQO9uvEVY5KAYSgpwitdKkCSvM9W8DK+Q5TAaL27LOenSozygFnFId/2gsBTYdN1M8kA31fiai06dCqhV9hZupeBOX/zjB8JS9j8Q2hK+w3XCLChQxrtj4uCQWMJTPLQWRsvQQem94rfXTfsETe8YzFCDsVihLYQ7CGmycHI7gCCLn/Q1IZWCLVPEGw0jwYAdspcCaSGfjhDFdMPWW2vugX0LjKFdUdkSOr8KfrpVKazq1CtpfO0oMRdN8I5zfu8/3Q==
+    email = bstudds@seek.com.au
+    name = Brendan Studds

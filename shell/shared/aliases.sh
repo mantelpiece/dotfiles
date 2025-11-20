@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-if [[ -x /usr/local/bin/gls ]]; then
-  ls=/usr/local/bin/gls
+if [[ -x $(which gls) ]]; then
+    ls=$(which gls)
 else
-  ls="ls"
+    ls="ls"
 fi
 
 alias ll=$ls' -alF --color=auto --group-directories-first'

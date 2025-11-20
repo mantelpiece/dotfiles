@@ -19,7 +19,7 @@ set noshowmode
 set laststatus=2
 
 " Mouse
-set ttymouse=xterm2
+" set ttymouse=xterm2
 set mouse=a
 
 
