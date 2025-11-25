@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
-good () { echo -e "\e[32m$*\e[0m"; }
-info () { echo -e "\e[34m$*\e[0m"; }
-errr () { echo -e "\e[31m$*\e[0m"; }
+echo="echo"
+hash gecho >/dev/null && echo="gecho"
+
+good () { $echo -e "\e[32m$*\e[0m"; }
+info () { $echo -e "\e[34m$*\e[0m"; }
+errr () { $echo -e "\e[31m$*\e[0m"; }
 
 die () { errr "${1:-""}" >&2; exit "${2:-1}"; }
 usage () { die "usage: $0 -e OS [-o OPTIONS]"; }
@@ -29,8 +32,7 @@ tmpDir=$(mktemp -d 2>/dev/null || mktemp -d -t 'tmp')
 trap 'rm -rf $tmpDir' EXIT
 
 
-echo "$HOME"
-echo "Installing for OS $env with options $options";
+good "Installing for OS $env with options $options";
 
 
 autoconf () {
@@ -49,8 +51,9 @@ linkIfNotExists () {
 }
 
 if [[ $env = "macos" ]]; then
+    good "#### Installing for macos environment tooling"
     if ! hash brew 2>/dev/null; then
-        echo -e "\n\nInstalling homebrew"
+        echo "Installing homebrew"
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         # shellcheck disable=SC2016
         echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/bstudds/.zprofile
@@ -59,11 +62,18 @@ if [[ $env = "macos" ]]; then
 
     install="brew install -q"
 
-    echo -e "\n\nInstalling mac fixes"
-    deps="bash-completion@2 coreutils"
+    echo "Installing GNU utils"
+    deps="bash-completion@2 coreutils gnu-sed gnu-tar gnu-which"
     $install $deps
 
-    # autoconf "Autcompletion for bash" '[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"'
+    # shellcheck disable=SC2016
+    autoconf "GNU core utils to path" 'export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+'
+    # shellcheck disable=SC2016
+    autoconf "GNU core utils man pages" 'export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+'
+    autoconf "Autcompletion for bash" '[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+'
 
 elif [[ $env = "ubuntu" ]]; then
     echo "Unfortunately I need to sudo to install - sudo password will be requested during installation"
@@ -78,7 +88,7 @@ if [[ $env = "ubuntu" ]]; then
     coreDeps="$coreDeps python-is-python3"
 fi
 good "\n\n#### Installing core deps"
-info "  deps: $coreDeps"
+echo "  deps: $coreDeps"
 if ! $install $coreDeps; then
     errr "Core install failed"
 fi
@@ -88,10 +98,10 @@ fi
 good "\n\n#### Linking dotfiles"
 (
 cd "$HOME" || die "Failed to cd into \$HOME"
-if [[ $options =~ "zsh" ]]; then
-    linkIfNotExists "$scriptDir/shell/zsh/zshrc" "$HOME/.zshrc"
+if [[ $SHELL =~ "zsh" ]]; then
+    rm -f ~/.zshrc && linkIfNotExists "$scriptDir/shell/zsh/zshrc" "$HOME/.zshrc"
 else
-    rm -f ~/.bashrc && ln -s "$scriptDir/shell/bash/bashrc" "$HOME/.bashrc";
+    rm -f ~/.bashrc && linkIfNotExists "$scriptDir/shell/bash/bashrc" "$HOME/.bashrc";
 fi
 linkIfNotExists "$scriptDir/tmux.conf" "$HOME/.tmux.conf";
 linkIfNotExists "$scriptDir/vim" "$HOME/.vim";
@@ -100,35 +110,19 @@ linkIfNotExists "$scriptDir/git/gitconfig_seek" "$HOME/.gitconfig";
 linkIfNotExists "$scriptDir/git/gitignore_global" "$HOME/.gitignore_global";
 )
 
-# Install mac "fixes"
-if [[ $env = "macos" ]]; then
-    good "\n\nInstalling mac fixes"
-    deps="bash-completion@2 coreutils gnu-sed"
-    $install $deps
 
-    # shellcheck disable=SC2016
-    autoconf "GNU core utils to path" 'export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-'
-    # shellcheck disable=SC2016
-    autoconf "GNU core utils man pages" 'export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-'
-    autoconf "Autcompletion for bash" '[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
-'
-fi
-
-
-# Install and configure base16-shell
+# Install base16-shell.
 if [[ ! -d $HOME/.config/base16-shell ]]; then
-    good -e "\n\n\n#### Installing base16 shell colorschemes"
+    good -e "\n\n#### Installing base16 shell colorschemes"
     git clone https://github.com/chriskempson/base16-shell.git "$HOME/.config/base16-shell"
     eval "$("$HOME/.config/base16-shell/profile_helper.sh")"
 fi
 
 if [[ $options =~ "zsh" ]]; then
+    good "\n\n#### Installing zsh tooling"
     if ! hash omz; then
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     fi
-    
 fi
 
 
@@ -169,20 +163,20 @@ if [[ $options =~ "myob" ]]; then
     autoconf "Autocompletion for aws cli" "complete -C /usr/local/bin/aws_completer aws"
 fi
 
+
 if [[ $options =~ "node" ]]; then
-    if ! hash nvm; then
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+    good "\n\n#### Installing Node tooling"
+    if hash nvm; then
+        PROFILE=/dev/null bash -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash'
         # shellcheck disable=SC2016
-        autoconf "Hook for nvm" '+export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion'
+        autoconf "Hook for nvm" 'export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm'
     fi
 fi
 
 
 if [[ $options =~ "python" ]]; then
-    good "\n\n#### Installing python options"
-    info "   deps: miniconda poetry"
+    good "\n\n#### Installing Python tooling"
     # Install miniconda
 
     if hash conda 2>/dev/null; then
@@ -225,6 +219,7 @@ fi
 
 # Install poetry
 if [[ $options =~ "poetry" ]]; then
+    good "\n\n#### Installing poetry"
     if hash poetry 2>/dev/null; then
         echo "... updating poetry"
         poetry self update
