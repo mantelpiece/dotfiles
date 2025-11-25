@@ -20,3 +20,6 @@ complete -C '/usr/local/bin/aws_completer' aws
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
 
+# Hook for nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

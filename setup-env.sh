@@ -36,9 +36,10 @@ good "Installing for OS $env with options $options";
 
 
 autoconf () {
-    touch "$scriptDir/shell/bash/conf/autoconfed.sh"
-    if ! grep -o "*'$2'*" "$scriptDir/shell/bash/conf/autoconfed.sh"; then
-        echo -e "\n# $1\n$2\n" >> "$scriptDir/shell/bash/conf/autoconfed.sh"
+    autoconfFile="$scriptDir/shell/shared/autoconfed.sh"
+    touch "$autoconfFile"
+    if ! grep -o -e '.*'"$2"'.*' "$autoconfFile" >/dev/null; then
+        $echo -e "\n# $1\n$2" >> "$autoconfFile"
     fi
 }
 
@@ -83,10 +84,10 @@ fi
 
 
 coreDeps="ack bash colordiff curl docker git jq python3 tmux tmuxinator tree vim fzf fd shellcheck"
-# nonCoreDeps="nvm xsv"
 if [[ $env = "ubuntu" ]]; then
     coreDeps="$coreDeps python-is-python3"
 fi
+
 good "\n\n#### Installing core deps"
 echo "  deps: $coreDeps"
 if ! $install $coreDeps; then
@@ -165,13 +166,13 @@ fi
 
 
 if [[ $options =~ "node" ]]; then
-    good "\n\n#### Installing Node tooling"
-    if hash nvm; then
+    if ! hash nvm; then
+        good "\n\n#### Installing Node tooling"
         PROFILE=/dev/null bash -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash'
-        # shellcheck disable=SC2016
-        autoconf "Hook for nvm" 'export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm'
     fi
+    # shellcheck disable=SC2016
+    autoconf "Hook for nvm" 'export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm'
 fi
 
 
@@ -242,19 +243,21 @@ if [[ $options =~ "poetry" ]]; then
 fi
 
 if [[ $options =~ "aws" ]]; then
-    good "Installing AWS CLI"
     if ! hash aws; then
+        good "Installing AWS CLI"
         if [[ $env == "macos" ]]; then
             curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
             sudo installer -pkg AWSCLIV2.pkg -target /
+            rm -f AWSCLIV2.pkg
         else
             errr "I don't know how to install AWS CLI for env $env."
         fi
     fi
 
-    autoconf "Enable AWS CLI completion" "autoload bashcompinit && bashcompinit
+    info "Installing AWS CLI autoconf"
+    autoconf "Enable AWS CLI completion" 'autoload bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
-complete -C '/usr/local/bin/aws_completer' aws"
+complete -C "/usr/local/bin/aws_completer" aws'
 fi
 
 if [[ $options =~ "jenv" ]]; then
