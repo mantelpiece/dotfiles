@@ -1,5 +1,5 @@
 [core]
-    excludefile = /home/brendan/.gitignore_global
+    excludefile = ~/.gitignore_global
 [user]
     name = Brendan Studds
     email = brendan.studds@gmail.com
